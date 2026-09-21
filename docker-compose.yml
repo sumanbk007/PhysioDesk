@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: physiodesk-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: physiodesk
+      POSTGRES_PASSWORD: physiodesk
+      POSTGRES_DB: physiodesk
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U physiodesk -d physiodesk"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
