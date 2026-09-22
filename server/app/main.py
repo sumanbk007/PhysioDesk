@@ -1,4 +1,10 @@
+# Import this FIRST so all ORM models register with SQLAlchemy before any
+# route tries to use them. Without it, string-based relationships like
+# Mapped["ReportFile"] can't be resolved at runtime.
+from app.db import base as _models_registry  # noqa: F401
+
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.router import api_router
 from app.core.config import settings
@@ -14,9 +20,6 @@ def create_app() -> FastAPI:
         redoc_url="/redoc",
         openapi_url="/openapi.json",
     )
-
-    # CORS — allow the frontend (Next.js) to call us
-    from fastapi.middleware.cors import CORSMiddleware
 
     app.add_middleware(
         CORSMiddleware,

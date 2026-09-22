@@ -1,19 +1,9 @@
-"""Global exception handlers that produce a consistent error envelope.
-
-Every error response has this shape:
-
-    {
-        "error": {
-            "code": "not_found",
-            "detail": "Patient not found",
-            "status": 404
-        }
-    }
-"""
+"""Global exception handlers that produce a consistent error envelope."""
 
 import logging
 
 from fastapi import FastAPI, Request, status
+from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError
@@ -28,9 +18,22 @@ def _envelope(code: str, detail: str, status_code: int) -> dict:
     return {"error": {"code": code, "detail": detail, "status": status_code}}
 
 
-def register_exception_handlers(app: FastAPI) -> None:
-    """Attach all exception handlers to the FastAPI app."""
+def _safe_errors(errors: list) -> list:
+    """Make validation errors JSON-serializable (bytes -> str, etc.)."""
+    try:
+        return jsonable_encoder(errors)
+    except Exception:
+        return [
+            {
+                "type": str(e.get("type")),
+                "loc": list(map(str, e.get("loc", []))),
+                "msg": str(e.get("msg")),
+            }
+            for e in errors
+        ]
 
+
+def register_exception_handlers(app: FastAPI) -> None:
     @app.exception_handler(AppError)
     async def handle_app_error(_: Request, exc: AppError) -> JSONResponse:
         return JSONResponse(
@@ -59,7 +62,7 @@ def register_exception_handlers(app: FastAPI) -> None:
                     "code": "validation_error",
                     "detail": "Request validation failed.",
                     "status": 422,
-                    "errors": exc.errors(),
+                    "errors": _safe_errors(exc.errors()),
                 }
             },
         )

@@ -2,22 +2,18 @@
 
 from fastapi import APIRouter, Depends
 
-from app.api.v1.routes import auth
+from app.api.v1.routes import auth, therapists
 from app.core.dependencies import get_current_user
 
 api_router = APIRouter()
 
-# Public routes (no auth required)
+# ---- Public routes ----
 api_router.include_router(auth.router, prefix="/auth", tags=["Auth"])
 
-# ---- Protected routers ----
-# Add new feature routers below, using dependencies=[Depends(get_current_user)]
-# so every route in them requires auth by default.
-# Example:
-# from app.api.v1.routes import patients
-# api_router.include_router(
-#     patients.router,
-#     prefix="/patients",
-#     tags=["Patients"],
-#     dependencies=[Depends(get_current_user)],
-# )
+# ---- Protected routes ----
+api_router.include_router(
+    therapists.router,
+    prefix="/therapists",
+    tags=["Therapists"],
+    dependencies=[Depends(get_current_user)],
+)
