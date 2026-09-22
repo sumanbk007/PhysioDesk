@@ -57,6 +57,9 @@ class User(Base):
     uploaded_reports: Mapped[list["ReportFile"]] = relationship(  # noqa: F821
         back_populates="uploader",
     )
+    created_payments: Mapped[list["Payment"]] = relationship(  # noqa: F821
+        back_populates="creator",
+    )
 
     def __repr__(self) -> str:
         return f"<User id={self.id} username={self.username!r} role={self.role!r}>"
