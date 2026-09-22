@@ -21,12 +21,7 @@ from app.db.base_class import Base
 
 
 class Appointment(Base):
-    """A booked session between a patient and a therapist on a specific date.
-
-    The composite unique constraint (therapist_id, date, start_time) enforces
-    at the database level that a therapist cannot be double-booked for the
-    same slot, regardless of application-level race conditions.
-    """
+    """A booked session between a patient and a therapist on a specific date."""
 
     __tablename__ = "appointments"
     __table_args__ = (
@@ -86,6 +81,10 @@ class Appointment(Base):
     )
     therapist: Mapped["Therapist"] = relationship(  # noqa: F821
         back_populates="appointments",
+    )
+    clinical_note: Mapped["ClinicalNote | None"] = relationship(  # noqa: F821
+        back_populates="appointment",
+        uselist=False,
     )
 
     def __repr__(self) -> str:

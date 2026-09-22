@@ -75,6 +75,11 @@ class Patient(Base):
     appointments: Mapped[list["Appointment"]] = relationship(  # noqa: F821
         back_populates="patient",
     )
+    clinical_notes: Mapped[list["ClinicalNote"]] = relationship(  # noqa: F821
+        back_populates="patient",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
 
     def __repr__(self) -> str:
         return (

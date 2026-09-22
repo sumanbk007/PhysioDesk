@@ -44,11 +44,15 @@ class Therapist(Base):
     schedule_exceptions: Mapped[list["ScheduleException"]] = relationship(  # noqa: F821
         back_populates="therapist",
         cascade="all, delete-orphan",
+        passive_deletes=True,
     )
     patients: Mapped[list["Patient"]] = relationship(  # noqa: F821
         back_populates="therapist",
     )
     appointments: Mapped[list["Appointment"]] = relationship(  # noqa: F821
+        back_populates="therapist",
+    )
+    clinical_notes: Mapped[list["ClinicalNote"]] = relationship(  # noqa: F821
         back_populates="therapist",
     )
 
