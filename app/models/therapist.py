@@ -46,5 +46,11 @@ class Therapist(Base):
         cascade="all, delete-orphan",
     )
 
+    # No cascade: the FK uses RESTRICT to prevent deleting therapists
+    # who still have patients assigned.
+    patients: Mapped[list["Patient"]] = relationship(  # noqa: F821
+        back_populates="therapist",
+    )
+
     def __repr__(self) -> str:
         return f"<Therapist id={self.id} name={self.name!r} specialty={self.specialty!r}>"
