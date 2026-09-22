@@ -16,13 +16,7 @@ from app.db.base_class import Base
 
 
 class Patient(Base):
-    """A patient receiving physiotherapy care.
-
-    Every patient has exactly one assigned therapist (a change of therapist
-    is a manual edit of therapist_id, not history-tracked). Sessions count
-    is denormalized: recomputed in the service layer whenever a clinical
-    note is created/deleted.
-    """
+    """A patient receiving physiotherapy care."""
 
     __tablename__ = "patients"
     __table_args__ = (
@@ -77,6 +71,9 @@ class Patient(Base):
     # ----- Relationships -----
     therapist: Mapped["Therapist"] = relationship(  # noqa: F821
         back_populates="patients",
+    )
+    appointments: Mapped[list["Appointment"]] = relationship(  # noqa: F821
+        back_populates="patient",
     )
 
     def __repr__(self) -> str:
