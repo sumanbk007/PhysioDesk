@@ -88,6 +88,11 @@ class Patient(Base):
     invoices: Mapped[list["Invoice"]] = relationship(  # noqa: F821
         back_populates="patient",
     )
+    notifications: Mapped[list["Notification"]] = relationship(  # noqa: F821
+        back_populates="patient",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
 
     def __repr__(self) -> str:
         return (

@@ -14,3 +14,4 @@ from app.models.clinical_note import ClinicalNote  # noqa: E402, F401
 from app.models.report_file import ReportFile  # noqa: E402, F401
 from app.models.invoice import Invoice  # noqa: E402, F401
 from app.models.payment import Payment  # noqa: E402, F401
+from app.models.notification import Notification  # noqa: E402, F401

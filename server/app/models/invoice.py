@@ -19,12 +19,7 @@ from app.db.base_class import Base
 
 
 class Invoice(Base):
-    """A bill issued to a patient for a service or package.
-
-    paid_amount and status are denormalized for fast list queries.
-    Both are recomputed by the billing service whenever a payment is
-    created or deleted.
-    """
+    """A bill issued to a patient for a service or package."""
 
     __tablename__ = "invoices"
     __table_args__ = (
@@ -107,6 +102,9 @@ class Invoice(Base):
         back_populates="invoice",
         cascade="all, delete-orphan",
         passive_deletes=True,
+    )
+    notifications: Mapped[list["Notification"]] = relationship(  # noqa: F821
+        back_populates="related_invoice",
     )
 
     def __repr__(self) -> str:

@@ -89,6 +89,9 @@ class Appointment(Base):
     invoices: Mapped[list["Invoice"]] = relationship(  # noqa: F821
         back_populates="appointment",
     )
+    notifications: Mapped[list["Notification"]] = relationship(  # noqa: F821
+        back_populates="related_appointment",
+    )
 
     def __repr__(self) -> str:
         return (
