@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import Boolean, DateTime, Integer, String, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.constants import UserRole
 from app.db.base_class import Base
@@ -51,6 +51,11 @@ class User(Base):
         nullable=False,
         server_default=func.now(),
         onupdate=func.now(),
+    )
+
+    # ----- Relationships -----
+    uploaded_reports: Mapped[list["ReportFile"]] = relationship(  # noqa: F821
+        back_populates="uploader",
     )
 
     def __repr__(self) -> str:

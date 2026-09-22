@@ -80,6 +80,11 @@ class Patient(Base):
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
+    report_files: Mapped[list["ReportFile"]] = relationship(  # noqa: F821
+        back_populates="patient",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
 
     def __repr__(self) -> str:
         return (
