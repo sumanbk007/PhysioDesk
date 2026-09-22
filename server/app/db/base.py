@@ -12,3 +12,4 @@ from app.models.patient import Patient  # noqa: E402, F401
 from app.models.appointment import Appointment  # noqa: E402, F401
 from app.models.clinical_note import ClinicalNote  # noqa: E402, F401
 from app.models.report_file import ReportFile  # noqa: E402, F401
+from app.models.invoice import Invoice  # noqa: E402, F401

@@ -86,6 +86,9 @@ class Appointment(Base):
         back_populates="appointment",
         uselist=False,
     )
+    invoices: Mapped[list["Invoice"]] = relationship(  # noqa: F821
+        back_populates="appointment",
+    )
 
     def __repr__(self) -> str:
         return (

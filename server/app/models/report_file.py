@@ -14,13 +14,6 @@ from app.db.base_class import Base
 
 
 class ReportFile(Base):
-    """An uploaded report file (X-ray, MRI, assessment PDF) for a patient.
-
-    The actual file lives on disk; this row stores only the metadata and
-    the storage path. If the patient is deleted, the file row cascades.
-    If the uploading user is deleted, the row is preserved but the
-    uploader reference becomes NULL.
-    """
 
     __tablename__ = "report_files"
 

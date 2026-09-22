@@ -85,6 +85,9 @@ class Patient(Base):
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
+    invoices: Mapped[list["Invoice"]] = relationship(  # noqa: F821
+        back_populates="patient",
+    )
 
     def __repr__(self) -> str:
         return (
