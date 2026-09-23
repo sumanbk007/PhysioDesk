@@ -2,24 +2,42 @@
 
 from fastapi import APIRouter, Depends
 
-from app.api.v1.routes import auth, patients, therapists
+from app.api.v1.routes import (
+    appointments,
+    auth,
+    patients,
+    schedule,
+    therapists,
+)
 from app.core.dependencies import get_current_user
 
 api_router = APIRouter()
 
-# ---- Public routes ----
 api_router.include_router(auth.router, prefix="/auth", tags=["Auth"])
 
-# ---- Protected routes ----
+_protected = [Depends(get_current_user)]
+
 api_router.include_router(
     therapists.router,
     prefix="/therapists",
     tags=["Therapists"],
-    dependencies=[Depends(get_current_user)],
+    dependencies=_protected,
 )
 api_router.include_router(
     patients.router,
     prefix="/patients",
     tags=["Patients"],
-    dependencies=[Depends(get_current_user)],
+    dependencies=_protected,
+)
+api_router.include_router(
+    schedule.router,
+    prefix="/schedule",
+    tags=["Schedule"],
+    dependencies=_protected,
+)
+api_router.include_router(
+    appointments.router,
+    prefix="/appointments",
+    tags=["Appointments"],
+    dependencies=_protected,
 )

@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
 from app.core.dependencies import PaginationParams, get_db
+from app.schemas.appointment import AppointmentListItem
 from app.schemas.common import MessageResponse, Page
 from app.schemas.patient import (
     PatientCreate,
@@ -11,12 +12,11 @@ from app.schemas.patient import (
     PatientRead,
     PatientUpdate,
 )
+from app.services import appointment_service as appt_service
 from app.services import patient_service as service
 
 router = APIRouter()
 
-
-# ---------- fixed-path routes FIRST ----------
 
 @router.get(
     "",
@@ -73,8 +73,6 @@ def list_statuses(db: Session = Depends(get_db)) -> list[str]:
     return service.list_statuses(db)
 
 
-# ---------- parameterized routes AFTER ----------
-
 @router.get(
     "/{patient_id}",
     response_model=PatientRead,
@@ -113,3 +111,26 @@ def delete_patient(
 ) -> MessageResponse:
     service.delete_patient(db, patient_id)
     return MessageResponse(message=f"Patient {patient_id} deleted.")
+
+
+@router.get(
+    "/{patient_id}/appointments",
+    response_model=Page[AppointmentListItem],
+    summary="List this patient's appointments (session history)",
+)
+def list_patient_appointments(
+    patient_id: int,
+    pagination: PaginationParams = Depends(),
+    db: Session = Depends(get_db),
+) -> Page[AppointmentListItem]:
+    items, total = appt_service.list_for_patient(
+        db, patient_id, offset=pagination.offset, limit=pagination.limit
+    )
+    pages = (total + pagination.page_size - 1) // pagination.page_size
+    return Page[AppointmentListItem](
+        items=[AppointmentListItem.model_validate(a) for a in items],
+        total=total,
+        page=pagination.page,
+        page_size=pagination.page_size,
+        pages=pages,
+    )
