@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, Depends
 
-from app.api.v1.routes import auth, therapists
+from app.api.v1.routes import auth, patients, therapists
 from app.core.dependencies import get_current_user
 
 api_router = APIRouter()
@@ -15,5 +15,11 @@ api_router.include_router(
     therapists.router,
     prefix="/therapists",
     tags=["Therapists"],
+    dependencies=[Depends(get_current_user)],
+)
+api_router.include_router(
+    patients.router,
+    prefix="/patients",
+    tags=["Patients"],
     dependencies=[Depends(get_current_user)],
 )
