@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.core.dependencies import PaginationParams, get_db
 from app.schemas.appointment import AppointmentListItem
 from app.schemas.common import MessageResponse, Page
+from app.schemas.invoice import InvoiceListItem
 from app.schemas.patient import (
     PatientCreate,
     PatientListItem,
@@ -13,6 +14,7 @@ from app.schemas.patient import (
     PatientUpdate,
 )
 from app.services import appointment_service as appt_service
+from app.services import invoice_service as inv_service
 from app.services import patient_service as service
 
 router = APIRouter()
@@ -26,9 +28,7 @@ router = APIRouter()
 def list_patients(
     search: str | None = Query(None, description="Search by name or phone"),
     therapist_id: int | None = Query(None, description="Filter by assigned therapist"),
-    status: str | None = Query(
-        None, description="Filter by status (Active / Completed / Due for follow-up)"
-    ),
+    status: str | None = Query(None),
     pagination: PaginationParams = Depends(),
     db: Session = Depends(get_db),
 ) -> Page[PatientListItem]:
@@ -129,6 +129,32 @@ def list_patient_appointments(
     pages = (total + pagination.page_size - 1) // pagination.page_size
     return Page[AppointmentListItem](
         items=[AppointmentListItem.model_validate(a) for a in items],
+        total=total,
+        page=pagination.page,
+        page_size=pagination.page_size,
+        pages=pages,
+    )
+
+
+@router.get(
+    "/{patient_id}/invoices",
+    response_model=Page[InvoiceListItem],
+    summary="List this patient's invoices",
+)
+def list_patient_invoices(
+    patient_id: int,
+    pagination: PaginationParams = Depends(),
+    db: Session = Depends(get_db),
+) -> Page[InvoiceListItem]:
+    items, total = inv_service.list_invoices(
+        db,
+        patient_id=patient_id,
+        offset=pagination.offset,
+        limit=pagination.limit,
+    )
+    pages = (total + pagination.page_size - 1) // pagination.page_size
+    return Page[InvoiceListItem](
+        items=[InvoiceListItem.model_validate(i) for i in items],
         total=total,
         page=pagination.page,
         page_size=pagination.page_size,

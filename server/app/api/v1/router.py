@@ -5,7 +5,9 @@ from fastapi import APIRouter, Depends
 from app.api.v1.routes import (
     appointments,
     auth,
+    billing,
     clinical_notes,
+    invoices,
     patients,
     progress,
     schedule,
@@ -51,5 +53,17 @@ api_router.include_router(
 api_router.include_router(
     progress.router,
     tags=["Progress"],
+    dependencies=_protected,
+)
+api_router.include_router(
+    invoices.router,
+    prefix="/invoices",
+    tags=["Invoices"],
+    dependencies=_protected,
+)
+api_router.include_router(
+    billing.router,
+    prefix="/billing",
+    tags=["Billing"],
     dependencies=_protected,
 )
