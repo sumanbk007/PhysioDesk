@@ -5,12 +5,18 @@ from sqlalchemy.orm import Session
 
 from app.core.dependencies import PaginationParams, get_db
 from app.schemas.common import MessageResponse, Page
+from app.schemas.schedule_exception import (
+    ScheduleExceptionCreate,
+    ScheduleExceptionRead,
+    ScheduleExceptionUpdate,
+)
 from app.schemas.therapist import (
     TherapistCreate,
     TherapistListItem,
     TherapistRead,
     TherapistUpdate,
 )
+from app.services import schedule_exception_service as exc_service
 from app.services import therapist_service as service
 
 router = APIRouter()
@@ -71,6 +77,35 @@ def list_specialties(db: Session = Depends(get_db)) -> list[str]:
     return service.list_specialties(db)
 
 
+# ---------- schedule-exception routes (fixed prefix before /{id}) ----------
+
+@router.patch(
+    "/schedule-exceptions/{exc_id}",
+    response_model=ScheduleExceptionRead,
+    summary="Update a schedule override",
+)
+def update_schedule_exception(
+    exc_id: int,
+    payload: ScheduleExceptionUpdate,
+    db: Session = Depends(get_db),
+) -> ScheduleExceptionRead:
+    exc = exc_service.update_exception(db, exc_id, payload)
+    return ScheduleExceptionRead.model_validate(exc)
+
+
+@router.delete(
+    "/schedule-exceptions/{exc_id}",
+    response_model=MessageResponse,
+    summary="Delete a schedule override",
+)
+def delete_schedule_exception(
+    exc_id: int,
+    db: Session = Depends(get_db),
+) -> MessageResponse:
+    exc_service.delete_exception(db, exc_id)
+    return MessageResponse(message=f"ScheduleException {exc_id} deleted.")
+
+
 # ---------- parameterized routes AFTER ----------
 
 @router.get(
@@ -111,3 +146,38 @@ def delete_therapist(
 ) -> MessageResponse:
     service.delete_therapist(db, therapist_id)
     return MessageResponse(message=f"Therapist {therapist_id} deleted.")
+
+
+# ---------- schedule-exceptions sub-resource (nested under therapist) ----------
+
+@router.get(
+    "/{therapist_id}/schedule-exceptions",
+    response_model=list[ScheduleExceptionRead],
+    summary="List schedule overrides for a therapist",
+)
+def list_schedule_exceptions(
+    therapist_id: int,
+    upcoming_only: bool = Query(
+        False, description="Only return overrides with date >= today"
+    ),
+    db: Session = Depends(get_db),
+) -> list[ScheduleExceptionRead]:
+    items = exc_service.list_for_therapist(
+        db, therapist_id, upcoming_only=upcoming_only
+    )
+    return [ScheduleExceptionRead.model_validate(e) for e in items]
+
+
+@router.post(
+    "/{therapist_id}/schedule-exceptions",
+    response_model=ScheduleExceptionRead,
+    status_code=status.HTTP_201_CREATED,
+    summary="Create a schedule override for a therapist on a specific date",
+)
+def create_schedule_exception(
+    therapist_id: int,
+    payload: ScheduleExceptionCreate,
+    db: Session = Depends(get_db),
+) -> ScheduleExceptionRead:
+    exc = exc_service.create_for_therapist(db, therapist_id, payload)
+    return ScheduleExceptionRead.model_validate(exc)
