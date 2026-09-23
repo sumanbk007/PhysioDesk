@@ -7,7 +7,9 @@ from app.api.v1.routes import (
     auth,
     billing,
     clinical_notes,
+    dashboard,
     invoices,
+    notifications,
     patients,
     progress,
     schedule,
@@ -21,6 +23,12 @@ api_router.include_router(auth.router, prefix="/auth", tags=["Auth"])
 
 _protected = [Depends(get_current_user)]
 
+api_router.include_router(
+    dashboard.router,
+    prefix="/dashboard",
+    tags=["Dashboard"],
+    dependencies=_protected,
+)
 api_router.include_router(
     therapists.router,
     prefix="/therapists",
@@ -65,5 +73,11 @@ api_router.include_router(
     billing.router,
     prefix="/billing",
     tags=["Billing"],
+    dependencies=_protected,
+)
+api_router.include_router(
+    notifications.router,
+    prefix="/notifications",
+    tags=["Notifications"],
     dependencies=_protected,
 )
