@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends
 from app.api.v1.routes import (
     appointments,
     auth,
+    clinical_notes,
     patients,
     schedule,
     therapists,
@@ -39,5 +40,10 @@ api_router.include_router(
     appointments.router,
     prefix="/appointments",
     tags=["Appointments"],
+    dependencies=_protected,
+)
+api_router.include_router(
+    clinical_notes.router,
+    tags=["Clinical Notes"],
     dependencies=_protected,
 )
