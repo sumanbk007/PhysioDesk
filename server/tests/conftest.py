@@ -1,7 +1,6 @@
 """Shared pytest fixtures for the PhysioDesk test suite.
 
-Uses the real Postgres database but rolls back each test transaction,
-so tests are isolated and don't pollute real data.
+Uses the real Postgres database but cleans up test rows after each test.
 """
 
 from __future__ import annotations
@@ -17,6 +16,7 @@ from app.db.base import Base  # noqa: F401
 from app.core.security import hash_password
 from app.db.session import SessionLocal, engine
 from app.main import app
+from app.models.patient import Patient
 from app.models.therapist import Therapist
 from app.models.user import User
 
@@ -46,7 +46,7 @@ def setup_database() -> Generator[None, None, None]:
 
     yield
 
-    # Cleanup: remove the test user at the end (best-effort)
+    # Cleanup test user at the end (best effort)
     with SessionLocal() as db:
         db.query(User).filter(User.username == TEST_USERNAME).delete()
         db.commit()
@@ -54,7 +54,7 @@ def setup_database() -> Generator[None, None, None]:
 
 @pytest.fixture
 def db() -> Generator[Session, None, None]:
-    """A transactional DB session that rolls back after each test."""
+    """A DB session for a test."""
     session = SessionLocal()
     try:
         yield session
@@ -98,6 +98,31 @@ def sample_therapist(db: Session) -> Generator[Therapist, None, None]:
     db.commit()
     db.refresh(t)
     yield t
-    # Cleanup — but session rollback in `db` fixture usually handles it
+    # Cleanup any patients attached to this therapist, then the therapist
+    db.query(Patient).filter(Patient.therapist_id == t.id).delete()
     db.query(Therapist).filter(Therapist.id == t.id).delete()
+    db.commit()
+
+
+@pytest.fixture
+def sample_patient(
+    db: Session, sample_therapist: Therapist
+) -> Generator[Patient, None, None]:
+    """A patient assigned to sample_therapist, cleaned up after the test."""
+    p = Patient(
+        name="Pytest Sample Patient",
+        age=30,
+        gender="Male",
+        phone="9800000000",
+        condition="Test condition",
+        therapist_id=sample_therapist.id,
+        sessions_total=10,
+        sessions_used=0,
+        status="Active",
+    )
+    db.add(p)
+    db.commit()
+    db.refresh(p)
+    yield p
+    db.query(Patient).filter(Patient.id == p.id).delete()
     db.commit()
