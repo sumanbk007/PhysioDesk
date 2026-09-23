@@ -7,6 +7,7 @@ from app.api.v1.routes import (
     auth,
     clinical_notes,
     patients,
+    progress,
     schedule,
     therapists,
 )
@@ -45,5 +46,10 @@ api_router.include_router(
 api_router.include_router(
     clinical_notes.router,
     tags=["Clinical Notes"],
+    dependencies=_protected,
+)
+api_router.include_router(
+    progress.router,
+    tags=["Progress"],
     dependencies=_protected,
 )
