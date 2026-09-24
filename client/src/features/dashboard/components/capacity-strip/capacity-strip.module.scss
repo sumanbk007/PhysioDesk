@@ -1,0 +1,109 @@
+@use "@/styles/tokens" as *;
+
+.card {
+  height: 100%;
+
+  :global(.ant-card-body) {
+    padding: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-5;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: $brand-text;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: $brand-text-secondary;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.item {
+  display: flex;
+  gap: $space-4;
+  align-items: flex-start;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: rgba(20, 184, 166, 0.12);
+  color: $brand-primary-active;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.nameRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $space-2;
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 600;
+  color: $brand-text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.counts {
+  font-size: 12px;
+  color: $brand-text-secondary;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.booked {
+  font-weight: 600;
+  color: $brand-text;
+}
+
+.total {
+  color: $brand-text-muted;
+}
+
+.meta {
+  font-size: 11px;
+  color: $brand-text-muted;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  opacity: 0.6;
+}

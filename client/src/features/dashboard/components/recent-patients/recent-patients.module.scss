@@ -1,0 +1,126 @@
+@use "@/styles/tokens" as *;
+
+.card {
+  height: 100%;
+
+  :global(.ant-card-body) {
+    padding: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: $brand-text;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: $brand-text-secondary;
+}
+
+.viewAll {
+  font-size: 12px;
+  font-weight: 500;
+  color: $brand-primary-active;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: background $duration-fast;
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.04);
+  }
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: rgba(20, 184, 166, 0.12);
+  color: $brand-primary-active;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 600;
+  color: $brand-text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  font-size: 11px;
+  color: $brand-text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.arrow {
+  color: $brand-text-muted;
+  font-size: 12px;
+  flex-shrink: 0;
+  transition: transform $duration-fast;
+
+  .item:hover & {
+    transform: translateX(2px);
+    color: $brand-primary-active;
+  }
+}

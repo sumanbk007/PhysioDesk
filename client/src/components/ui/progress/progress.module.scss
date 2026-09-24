@@ -1,0 +1,38 @@
+@use "@/styles/tokens" as *;
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  width: 100%;
+}
+
+.wrapper :global(.ant-progress) {
+  flex: 1;
+  margin: 0;
+}
+
+.wrapper :global(.ant-progress-bg) {
+  transition: width 400ms $ease-out;
+}
+
+.small :global(.ant-progress-inner) {
+  height: 6px !important;
+}
+
+.default :global(.ant-progress-inner) {
+  height: 8px !important;
+}
+
+.large :global(.ant-progress-inner) {
+  height: 10px !important;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: $brand-text-secondary;
+  min-width: 34px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

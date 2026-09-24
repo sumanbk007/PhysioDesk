@@ -17,3 +17,7 @@ export type { PageHeaderProps } from "./page-header";
 
 export { PageLoader } from "./page-loader";
 export type { PageLoaderProps } from "./page-loader";
+
+export { Progress } from "./progress";
+
+export { Skeleton } from "./skeleton";

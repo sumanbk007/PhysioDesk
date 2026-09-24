@@ -1,0 +1,62 @@
+@use "@/styles/tokens" as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: $space-4;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  :global(.ant-card-body) {
+    padding: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: $brand-text-secondary;
+}
+
+.iconWrap {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(20, 184, 166, 0.1);
+  color: $brand-primary-active;
+}
+
+.value {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: $brand-text;
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  font-size: 12px;
+  color: $brand-text-muted;
+}

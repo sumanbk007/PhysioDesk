@@ -7,6 +7,7 @@ import type { AuthUser } from "./types";
 interface AuthState {
   token: string | null;
   user: AuthUser | null;
+  hydrated: boolean;
   setAuth: (token: string, user: AuthUser) => void;
   setUser: (user: AuthUser) => void;
   logout: () => void;
@@ -17,13 +18,17 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       token: null,
       user: null,
-      setAuth: (token, user) => set({ token, user }),
+      hydrated: false,
+      setAuth: (token, user) => set({ token, user, hydrated: true }),
       setUser: (user) => set({ user }),
       logout: () => set({ token: null, user: null }),
     }),
     {
       name: "physiodesk-auth",
       storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        if (state) state.hydrated = true;
+      },
     }
   )
 );

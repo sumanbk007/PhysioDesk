@@ -1,4 +1,4 @@
-import { storage } from "@/services/storage/storage";
+import { useAuthStore } from "@/features/auth/store";
 import type { ApiErrorBody } from "./types";
 
 const BASE_URL =
@@ -34,11 +34,15 @@ async function request<T>(
     });
   }
 
-  const token = storage.getAccessToken();
+  const token = useAuthStore.getState().token;
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
   if (token) headers.Authorization = `Bearer ${token}`;
+
+  if (process.env.NODE_ENV === "development") {
+    console.log(`[api] ${method} ${path} — auth: ${token ? "yes" : "NO"}`);
+  }
 
   const res = await fetch(url.toString(), {
     method,
@@ -63,8 +67,12 @@ async function request<T>(
     const code = body?.error?.code ?? "http_error";
     const detail = body?.error?.detail ?? res.statusText ?? "Request failed";
 
-    if (res.status === 401) {
-      storage.clearAuth();
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[api] ${method} ${path} → ${res.status} ${code}: ${detail}`);
+    }
+
+    if (res.status === 401 && token) {
+      useAuthStore.getState().logout();
       if (typeof window !== "undefined") {
         window.location.href = "/login";
       }

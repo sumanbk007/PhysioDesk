@@ -1,28 +1,46 @@
 "use client";
 
-import { Card, PageHeader, StatusBadge } from "@/components/ui";
+import {
+  CapacityStrip,
+  RecentPatients,
+  SummaryCards,
+  useCapacity,
+  useDashboardSummary,
+  useRecentPatients,
+} from "@/features/dashboard";
+import { PageHeader } from "@/components/ui";
+import { formatDate } from "@/lib/utils";
+import styles from "./dashboard.module.scss";
 
 export default function DashboardPage() {
+  const summary = useDashboardSummary();
+  const capacity = useCapacity();
+  const recent = useRecentPatients(5);
+
+  const today = new Date();
+
   return (
-    <div className="space-y-6">
+    <div className={styles.page}>
       <PageHeader
-        title="Dashboard"
+        title={formatDate(today, "long")}
         subtitle="Overview of today at the clinic."
       />
 
-      <Card>
-        <div className="space-y-3">
-          <div className="text-sm text-slate-500">Status preview</div>
-          <div className="flex flex-wrap gap-2">
-            <StatusBadge status="Active" />
-            <StatusBadge status="Booked" />
-            <StatusBadge status="Due" />
-            <StatusBadge status="Paid" />
-            <StatusBadge status="Sent" />
-            <StatusBadge status="Cancelled" />
-          </div>
-        </div>
-      </Card>
+      <SummaryCards
+        data={summary.data}
+        loading={summary.isLoading || summary.isError}
+      />
+
+      <div className={styles.split}>
+        <CapacityStrip
+          data={capacity.data}
+          loading={capacity.isLoading || capacity.isError}
+        />
+        <RecentPatients
+          data={recent.data}
+          loading={recent.isLoading || recent.isError}
+        />
+      </div>
     </div>
   );
 }
