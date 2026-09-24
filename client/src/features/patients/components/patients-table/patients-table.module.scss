@@ -1,0 +1,24 @@
+@use "@/styles/tokens" as *;
+
+.table {
+  :global(.ant-table-container) {
+    border-radius: $radius-card;
+  }
+}
+
+.clearBtn {
+  padding: 6px 14px;
+  border-radius: $radius-control;
+  border: 1px solid $brand-border;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: $brand-text;
+  cursor: pointer;
+  transition: all $duration-fast;
+
+  &:hover {
+    border-color: $brand-primary;
+    color: $brand-primary-active;
+  }
+}

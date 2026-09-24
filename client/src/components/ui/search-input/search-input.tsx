@@ -23,12 +23,10 @@ export function SearchInput({
   const [local, setLocal] = useState(value);
   const debounced = useDebouncedValue(local, debounceMs);
 
-  // Sync external value changes (e.g. clearing filters) back to local
   useEffect(() => {
     setLocal(value);
   }, [value]);
 
-  // Emit changes after debounce
   useEffect(() => {
     if (debounced !== value) {
       onChange(debounced);
