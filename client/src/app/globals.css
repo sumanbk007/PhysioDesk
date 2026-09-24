@@ -1,49 +1,61 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  :root {
-    --brand-primary: #14b8a6;
-    --brand-primary-hover: #0f9a8b;
-    --brand-primary-active: #0d8578;
+@theme {
+  /* Brand */
+  --color-brand-primary: #14b8a6;
+  --color-brand-primary-hover: #0f9a8b;
+  --color-brand-primary-active: #0d8578;
+  --color-brand-primary-soft: #e6f7f5;
 
-    --brand-bg: #fafaf7;
-    --brand-surface: #ffffff;
-    --brand-border: #e2e8f0;
+  /* Surfaces */
+  --color-brand-bg: #fafaf7;
+  --color-brand-surface: #ffffff;
+  --color-brand-border: #e2e8f0;
+  --color-brand-border-strong: #cbd5e1;
 
-    --brand-text: #0f172a;
-    --brand-text-secondary: #64748b;
-    --brand-text-muted: #94a3b8;
+  /* Text */
+  --color-brand-text: #0f172a;
+  --color-brand-text-secondary: #64748b;
+  --color-brand-text-muted: #94a3b8;
 
-    --status-success: #10b981;
-    --status-warning: #f59e0b;
-    --status-info: #0ea5e9;
-    --status-danger: #f43f5e;
-    --status-neutral: #64748b;
-  }
+  /* Status */
+  --color-status-success: #10b981;
+  --color-status-warning: #f59e0b;
+  --color-status-info: #0ea5e9;
+  --color-status-danger: #f43f5e;
+  --color-status-neutral: #64748b;
 
-  body {
-    background-color: var(--brand-bg);
-    color: var(--brand-text);
-    -webkit-font-smoothing: antialiased;
-  }
+  /* Radii */
+  --radius-control: 8px;
+  --radius-card: 10px;
 
-  .tabular-nums {
-    font-variant-numeric: tabular-nums;
-  }
+  /* Spacing extensions */
+  --spacing-page: 24px;
+  --spacing-page-lg: 32px;
 }
 
-@layer utilities {
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: rgba(148, 163, 184, 0.3);
-    border-radius: 9999px;
-  }
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-  }
+html,
+body {
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-text);
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
 }

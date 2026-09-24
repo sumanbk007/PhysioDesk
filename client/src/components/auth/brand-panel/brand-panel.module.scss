@@ -1,0 +1,56 @@
+@use "@/styles/tokens" as *;
+
+.panel {
+  position: relative;
+  z-index: 10;
+  max-width: 28rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-5;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: 4px 12px;
+  border-radius: $radius-pill;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  font-size: 12px;
+  font-weight: 500;
+  color: $brand-primary-active;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: $radius-pill;
+  background: $brand-primary;
+}
+
+.illustrationWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-4 0;
+}
+
+.heading {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: $brand-text;
+}
+
+.description {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: $brand-text-secondary;
+}

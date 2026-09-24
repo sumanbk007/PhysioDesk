@@ -9,7 +9,8 @@ export type ButtonVariant = "primary" | "default" | "text" | "link" | "dashed";
 export type ButtonSize = "small" | "middle" | "large";
 export type ButtonTone = "default" | "danger";
 
-export interface ButtonProps extends Omit<AntButtonProps, "type" | "size" | "danger"> {
+export interface ButtonProps
+  extends Omit<AntButtonProps, "type" | "size" | "danger" | "variant"> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   tone?: ButtonTone;

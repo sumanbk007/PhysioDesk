@@ -1,0 +1,11 @@
+@use "@/styles/tokens" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.submit {
+  margin-top: $space-2;
+}
