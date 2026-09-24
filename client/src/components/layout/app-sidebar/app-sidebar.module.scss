@@ -1,0 +1,72 @@
+@use "@/styles/tokens" as *;
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  border-right: 1px solid $brand-border;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  height: 64px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid $brand-border;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: $brand-primary;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  box-shadow: 0 1px 2px rgba(20, 184, 166, 0.25);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brandName {
+  font-size: 14px;
+  font-weight: 600;
+  color: $brand-text;
+}
+
+.brandSub {
+  font-size: 11px;
+  color: $brand-text-secondary;
+  margin-top: 2px;
+}
+
+.nav {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.footer {
+  padding: 12px 20px;
+  border-top: 1px solid $brand-border;
+  font-size: 11px;
+  color: $brand-text-muted;
+  letter-spacing: 0.02em;
+}

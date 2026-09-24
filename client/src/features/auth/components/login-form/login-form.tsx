@@ -39,7 +39,7 @@ export function LoginForm() {
         `${process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/v1"}/auth/me`,
         {
           headers: { Authorization: `Bearer ${token.access_token}` },
-        }
+        },
       );
 
       if (!meRes.ok) {
@@ -70,7 +70,6 @@ export function LoginForm() {
             label="Username"
             placeholder="frontdesk"
             autoComplete="username"
-            autoFocus
             required
             error={errors.username?.message}
           />

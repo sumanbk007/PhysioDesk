@@ -1,11 +1,8 @@
 "use client";
 
-import { Layout } from "antd";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { AppTopbar } from "@/components/layout/app-topbar";
 import { RequireAuth } from "@/components/auth/require-auth";
-
-const { Content } = Layout;
 
 export default function AppLayout({
   children,
@@ -14,22 +11,15 @@ export default function AppLayout({
 }) {
   return (
     <RequireAuth>
-      <Layout style={{ minHeight: "100vh" }}>
+      <div className="flex min-h-screen bg-[var(--color-brand-bg)]">
         <AppSidebar />
-        <Layout>
+        <div className="flex-1 flex flex-col min-w-0">
           <AppTopbar />
-          <Content
-            className="scrollbar-thin"
-            style={{
-              padding: 24,
-              background: "var(--brand-bg)",
-              overflowY: "auto",
-            }}
-          >
+          <main className="flex-1 overflow-y-auto p-6 lg:p-8">
             <div className="max-w-[1400px] mx-auto">{children}</div>
-          </Content>
-        </Layout>
-      </Layout>
+          </main>
+        </div>
+      </div>
     </RequireAuth>
   );
 }

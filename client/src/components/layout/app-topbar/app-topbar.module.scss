@@ -1,0 +1,154 @@
+@use "@/styles/tokens" as *;
+
+.topbar {
+  height: 64px;
+  flex-shrink: 0;
+  background: #fff;
+  border-bottom: 1px solid $brand-border;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+/* ---------------- Search ---------------- */
+
+.search {
+  position: relative;
+  flex: 1;
+  max-width: 420px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $brand-text-muted;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px 0 38px;
+  border-radius: $radius-control;
+  border: 1px solid $brand-border;
+  background: #f8fafc;
+  font-size: 14px;
+  color: $brand-text;
+  outline: none;
+  transition: all $duration-fast;
+
+  &::placeholder {
+    color: $brand-text-muted;
+  }
+
+  &:focus {
+    background: #fff;
+    border-color: $brand-primary;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
+  }
+}
+
+/* ---------------- Actions ---------------- */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.iconButton {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-control;
+  border: none;
+  background: transparent;
+  color: $brand-text-secondary;
+  cursor: pointer;
+  transition: all $duration-fast;
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.05);
+    color: $brand-text;
+  }
+}
+
+.dot {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: $status-danger;
+  border: 2px solid #fff;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: $brand-border;
+  margin: 0 8px;
+}
+
+/* ---------------- User menu ---------------- */
+
+.userButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 4px 4px;
+  border-radius: $radius-pill;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background $duration-fast;
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.05);
+  }
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 500;
+  color: $brand-text;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  color: $brand-text-muted;
+}
+
+/* ---------------- Menu dropdown content ---------------- */
+
+.menuHeader {
+  padding: 4px 0;
+  min-width: 180px;
+}
+
+.menuName {
+  font-size: 13px;
+  font-weight: 600;
+  color: $brand-text;
+}
+
+.menuRole {
+  font-size: 11px;
+  color: $brand-text-secondary;
+  margin-top: 2px;
+  text-transform: capitalize;
+}
