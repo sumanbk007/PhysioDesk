@@ -1,0 +1,20 @@
+@use "@/styles/tokens" as *;
+
+.card {
+  background: $brand-surface;
+  border: 1px solid $brand-border;
+  border-radius: $radius-card;
+  box-shadow: $shadow-card;
+}
+
+.padded {
+  :global(.ant-card-body) {
+    padding: $space-5;
+  }
+}
+
+.flush {
+  :global(.ant-card-body) {
+    padding: 0;
+  }
+}

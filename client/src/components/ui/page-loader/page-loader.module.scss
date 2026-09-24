@@ -1,0 +1,15 @@
+@use "@/styles/tokens" as *;
+
+.wrapper {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+}
+
+.label {
+  font-size: 13px;
+  color: $brand-text-secondary;
+}

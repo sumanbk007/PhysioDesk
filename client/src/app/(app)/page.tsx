@@ -1,15 +1,29 @@
+"use client";
+
+import { Card, PageHeader, StatusBadge } from "@/components/ui";
+
 export default function DashboardPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-sm text-slate-500">
-          Overview of today at the clinic.
-        </p>
-      </div>
-      <div className="p-8 border border-dashed border-slate-200 rounded-xl text-center text-slate-500">
-        Dashboard content coming next.
-      </div>
+    <div>
+      <PageHeader
+        title="Dashboard"
+        subtitle="Overview of today at the clinic."
+        action={<span className="text-sm text-slate-500">Coming soon</span>}
+      />
+
+      <Card>
+        <div className="space-y-2">
+          <div className="text-sm text-slate-500">Status preview</div>
+          <div className="flex flex-wrap gap-2">
+            <StatusBadge status="Active" />
+            <StatusBadge status="Booked" />
+            <StatusBadge status="Due" />
+            <StatusBadge status="Paid" />
+            <StatusBadge status="Sent" />
+            <StatusBadge status="Cancelled" />
+          </div>
+        </div>
+      </Card>
     </div>
   );
 }

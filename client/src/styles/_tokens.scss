@@ -1,0 +1,48 @@
+// PhysioDesk design tokens (SCSS mirror of CSS variables in globals.css).
+
+// Brand
+$brand-primary: #14b8a6;
+$brand-primary-hover: #0f9a8b;
+$brand-primary-active: #0d8578;
+$brand-primary-soft: #e6f7f5;
+
+// Surfaces
+$brand-bg: #fafaf7;
+$brand-surface: #ffffff;
+$brand-border: #e2e8f0;
+$brand-border-strong: #cbd5e1;
+
+// Text
+$brand-text: #0f172a;
+$brand-text-secondary: #64748b;
+$brand-text-muted: #94a3b8;
+
+// Status
+$status-success: #10b981;
+$status-warning: #f59e0b;
+$status-info: #0ea5e9;
+$status-danger: #f43f5e;
+$status-neutral: #64748b;
+
+// Radii
+$radius-control: 8px;
+$radius-card: 10px;
+$radius-pill: 999px;
+
+// Spacing
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+
+// Shadows
+$shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
+$shadow-modal: 0 10px 30px rgba(15, 23, 42, 0.12);
+
+// Transitions
+$ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+$duration-fast: 150ms;
+$duration-normal: 250ms;
