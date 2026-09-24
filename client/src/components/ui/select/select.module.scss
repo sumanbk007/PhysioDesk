@@ -1,0 +1,20 @@
+@use "@/styles/tokens" as *;
+
+.select {
+  width: 100%;
+  min-width: 160px;
+
+  :global(.ant-select-selector) {
+    border-radius: $radius-control !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    border-color: $brand-border !important;
+    transition: border-color $duration-fast, box-shadow $duration-fast !important;
+  }
+
+  &:global(.ant-select-focused) :global(.ant-select-selector) {
+    border-color: $brand-primary !important;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12) !important;
+  }
+}
