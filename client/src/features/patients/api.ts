@@ -1,6 +1,9 @@
 import { api } from "@/services/http/client";
-import { patientEndpoints } from "./endpoints";
+import { clinicalNoteEndpoints, patientEndpoints } from "./endpoints";
 import type {
+  ClinicalNote,
+  ClinicalNoteListParams,
+  ClinicalNotePage,
   Patient,
   PatientCreate,
   PatientListParams,
@@ -35,4 +38,18 @@ export async function updatePatient(
 
 export async function deletePatient(id: number): Promise<void> {
   return api.del<void>(patientEndpoints.detail(id));
+}
+
+export async function fetchPatientNotes(
+  patientId: number,
+  params: ClinicalNoteListParams = {},
+): Promise<ClinicalNotePage> {
+  return api.get<ClinicalNotePage>(
+    patientEndpoints.clinicalNotes(patientId),
+    params,
+  );
+}
+
+export async function fetchClinicalNote(noteId: number): Promise<ClinicalNote> {
+  return api.get<ClinicalNote>(clinicalNoteEndpoints.detail(noteId));
 }

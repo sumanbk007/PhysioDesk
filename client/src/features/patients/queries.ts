@@ -4,42 +4,52 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/features/auth/store";
 import { queryKeys } from "@/services/http/query-keys";
 import { api } from "@/services/http/client";
-import { fetchPatient, fetchPatients, fetchPatientStatuses } from "./api";
+import {
+  fetchClinicalNote,
+  fetchPatient,
+  fetchPatientNotes,
+  fetchPatients,
+  fetchPatientStatuses,
+} from "./api";
 import { patientEndpoints } from "./endpoints";
 import type {
   AppointmentListParams,
   AppointmentPage,
+  ClinicalNoteListParams,
   PatientListParams,
 } from "./types";
 
-export function usePatients(params: PatientListParams) {
+function useAuthReady() {
   const hydrated = useAuthStore((s) => s.hydrated);
   const token = useAuthStore((s) => s.token);
+  return hydrated && !!token;
+}
+
+export function usePatients(params: PatientListParams) {
+  const ready = useAuthReady();
   return useQuery({
     queryKey: queryKeys.patients.list(params as Record<string, unknown>),
     queryFn: () => fetchPatients(params),
-    enabled: hydrated && !!token,
+    enabled: ready,
     placeholderData: (prev) => prev,
   });
 }
 
 export function usePatient(id: number) {
-  const hydrated = useAuthStore((s) => s.hydrated);
-  const token = useAuthStore((s) => s.token);
+  const ready = useAuthReady();
   return useQuery({
     queryKey: queryKeys.patients.detail(id),
     queryFn: () => fetchPatient(id),
-    enabled: hydrated && !!token && id > 0,
+    enabled: ready && id > 0,
   });
 }
 
 export function usePatientStatuses() {
-  const hydrated = useAuthStore((s) => s.hydrated);
-  const token = useAuthStore((s) => s.token);
+  const ready = useAuthReady();
   return useQuery({
     queryKey: queryKeys.patients.statuses,
     queryFn: fetchPatientStatuses,
-    enabled: hydrated && !!token,
+    enabled: ready,
   });
 }
 
@@ -47,8 +57,7 @@ export function usePatientAppointments(
   patientId: number,
   params: AppointmentListParams = {},
 ) {
-  const hydrated = useAuthStore((s) => s.hydrated);
-  const token = useAuthStore((s) => s.token);
+  const ready = useAuthReady();
   return useQuery({
     queryKey: queryKeys.patients.appointments(
       patientId,
@@ -56,7 +65,32 @@ export function usePatientAppointments(
     ),
     queryFn: () =>
       api.get<AppointmentPage>(patientEndpoints.appointments(patientId), params),
-    enabled: hydrated && !!token && patientId > 0,
+    enabled: ready && patientId > 0,
     placeholderData: (prev) => prev,
+  });
+}
+
+export function usePatientNotes(
+  patientId: number,
+  params: ClinicalNoteListParams = {},
+) {
+  const ready = useAuthReady();
+  return useQuery({
+    queryKey: queryKeys.clinicalNotes.forPatient(
+      patientId,
+      params as Record<string, unknown>,
+    ),
+    queryFn: () => fetchPatientNotes(patientId, params),
+    enabled: ready && patientId > 0,
+    placeholderData: (prev) => prev,
+  });
+}
+
+export function useClinicalNote(noteId: number) {
+  const ready = useAuthReady();
+  return useQuery({
+    queryKey: queryKeys.clinicalNotes.detail(noteId),
+    queryFn: () => fetchClinicalNote(noteId),
+    enabled: ready && noteId > 0,
   });
 }

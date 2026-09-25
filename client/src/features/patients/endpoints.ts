@@ -8,3 +8,7 @@ export const patientEndpoints = {
   clinicalNotes: (id: number) => `/patients/${id}/clinical-notes`,
   reports: (id: number) => `/patients/${id}/reports`,
 } as const;
+
+export const clinicalNoteEndpoints = {
+  detail: (id: number) => `/clinical-notes/${id}`,
+} as const;

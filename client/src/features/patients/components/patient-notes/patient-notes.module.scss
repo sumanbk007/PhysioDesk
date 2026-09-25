@@ -1,0 +1,46 @@
+@use "@/styles/tokens" as *;
+
+.card {
+  :global(.ant-card-body) {
+    padding: 0;
+  }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  min-height: 540px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid $brand-border;
+
+  @media (max-width: 900px) {
+    border-right: none;
+    border-bottom: 1px solid $brand-border;
+  }
+}
+
+.sidebarHeader {
+  padding: $space-4 $space-5;
+  border-bottom: 1px solid $brand-border;
+}
+
+.sidebarBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: $space-2;
+  max-height: 600px;
+}
+
+.main {
+  padding: $space-5 $space-6;
+  overflow-y: auto;
+  max-height: 600px;
+}

@@ -57,7 +57,7 @@ export type PatientUpdate = Partial<PatientCreate>;
 
 export type PatientPage = Page<PatientListItem>;
 
-// ---------- Appointments (used on Sessions tab + Overview) ----------
+// ---------- Appointments ----------
 
 export interface AppointmentListItem {
   id: number;
@@ -75,3 +75,42 @@ export interface AppointmentListParams {
 }
 
 export type AppointmentPage = Page<AppointmentListItem>;
+
+// ---------- Clinical notes ----------
+
+export interface ClinicalNoteListItem {
+  id: number;
+  patient_id: number;
+  therapist_id: number;
+  note_date: string;
+  pain_score: number | null;
+  rom_score: number | null;
+  strength_score: number | null;
+  milestone: string | null;
+}
+
+export interface ClinicalNote extends ClinicalNoteListItem {
+  appointment_id: number | null;
+  chief_complaint: string | null;
+  pain_location: string | null;
+  diagnosis: string | null;
+  assessment: string | null;
+  rom: string | null;
+  strength: string | null;
+  special_tests: string | null;
+  treatment: string | null;
+  exercises: string | null;
+  patient_response: string | null;
+  hep: string | null;
+  plan: string | null;
+  therapist_notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ClinicalNoteListParams {
+  page?: number;
+  page_size?: number;
+}
+
+export type ClinicalNotePage = Page<ClinicalNoteListItem>;
