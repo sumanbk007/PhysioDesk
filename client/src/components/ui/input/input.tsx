@@ -13,6 +13,7 @@ export interface InputProps extends AntInputProps {
 }
 
 type PasswordProps = React.ComponentProps<typeof AntInput.Password>;
+type TextAreaProps = React.ComponentProps<typeof AntInput.TextArea>;
 
 function FieldShell({
   label,
@@ -104,6 +105,34 @@ const PasswordInput = forwardRef<InputRef, InputProps & PasswordProps>(
 );
 PasswordInput.displayName = "Input.Password";
 
+const TextAreaInput = forwardRef<
+  React.ComponentRef<typeof AntInput.TextArea>,
+  InputProps & TextAreaProps
+>(({ label, hint, error, required, id, className, ...rest }, ref) => {
+  const autoId = useId();
+  const inputId = id ?? autoId;
+
+  return (
+    <FieldShell
+      label={label}
+      hint={hint}
+      error={error}
+      required={required}
+      inputId={inputId}
+    >
+      <AntInput.TextArea
+        ref={ref}
+        id={inputId}
+        status={error ? "error" : undefined}
+        className={[styles.input, className].filter(Boolean).join(" ")}
+        {...rest}
+      />
+    </FieldShell>
+  );
+});
+TextAreaInput.displayName = "Input.TextArea";
+
 export const Input = Object.assign(BaseInput, {
   Password: PasswordInput,
+  TextArea: TextAreaInput,
 });

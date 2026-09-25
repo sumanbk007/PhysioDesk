@@ -12,6 +12,7 @@ import {
   StatusBadge,
 } from "@/components/ui";
 import { useDeletePatient } from "../../mutations";
+import { PatientFormModal } from "../patient-form-modal";
 import type { Patient } from "../../types";
 import styles from "./patient-header.module.scss";
 
@@ -26,6 +27,7 @@ export function PatientHeader({ patient, loading, notFound }: PatientHeaderProps
   const { message } = App.useApp();
   const deletePatient = useDeletePatient();
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
   const handleDelete = async () => {
     if (!patient) return;
@@ -87,8 +89,7 @@ export function PatientHeader({ patient, loading, notFound }: PatientHeaderProps
                 <Button
                   variant="default"
                   icon={<Pencil size={14} />}
-                  disabled
-                  title="Edit drawer coming soon"
+                  onClick={() => setEditOpen(true)}
                 >
                   Edit
                 </Button>
@@ -117,6 +118,12 @@ export function PatientHeader({ patient, loading, notFound }: PatientHeaderProps
         loading={deletePatient.isPending}
         onConfirm={handleDelete}
         onCancel={() => setConfirmOpen(false)}
+      />
+
+      <PatientFormModal
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        patient={patient}
       />
     </>
   );

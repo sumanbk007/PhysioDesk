@@ -1,35 +1,85 @@
 @use "@/styles/tokens" as *;
 
 .modal {
+  :global(.ant-modal) {
+    max-width: calc(100vw - 32px);
+    top: auto;
+    padding-bottom: 0;
+    margin: 0 auto;
+  }
+
+  :global(.ant-modal-wrap) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
   :global(.ant-modal-content) {
     border-radius: $radius-card;
     padding: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: var(--pd-modal-height, 80vh);
+    max-height: var(--pd-modal-height, 80vh);
   }
 
   :global(.ant-modal-header) {
-    padding: $space-5 $space-6;
+    padding: 20px 24px;
     border-bottom: 1px solid $brand-border;
     margin: 0;
+    flex: 0 0 auto;
+    background: #fff;
+    border-radius: 0;
   }
 
   :global(.ant-modal-title) {
     font-size: 16px;
     font-weight: 600;
     color: $brand-text;
+    line-height: 1.4;
+    padding-right: 32px;
   }
 
   :global(.ant-modal-body) {
-    padding: $space-5 $space-6;
+    padding: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    overscroll-behavior: contain;
+  }
+
+  :global(.ant-modal-body::-webkit-scrollbar) {
+    width: 8px;
+  }
+
+  :global(.ant-modal-body::-webkit-scrollbar-thumb) {
+    background-color: rgba(148, 163, 184, 0.4);
+    border-radius: 9999px;
+  }
+
+  :global(.ant-modal-body::-webkit-scrollbar-thumb:hover) {
+    background-color: rgba(148, 163, 184, 0.6);
+  }
+
+  :global(.ant-modal-body::-webkit-scrollbar-track) {
+    background: transparent;
   }
 
   :global(.ant-modal-footer) {
-    padding: $space-4 $space-6;
+    padding: 16px 24px;
     border-top: 1px solid $brand-border;
     margin: 0;
     display: flex;
     justify-content: flex-end;
-    gap: $space-2;
+    gap: 8px;
+    flex: 0 0 auto;
+    background: #fff;
+    border-radius: 0;
   }
 
   :global(.ant-modal-close) {

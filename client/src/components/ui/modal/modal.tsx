@@ -2,10 +2,11 @@
 
 import { Modal as AntModal } from "antd";
 import type { ModalProps as AntModalProps } from "antd";
-import styles from "./modal.module.scss";
+import css from "./modal.module.scss";
 
 export interface ModalProps extends AntModalProps {
-  footer?: AntModalProps["footer"];
+  /** Height of the modal as a viewport percentage. Default 80. */
+  heightVh?: number;
 }
 
 export function Modal({
@@ -15,6 +16,7 @@ export function Modal({
   maskClosable = false,
   footer,
   className,
+  heightVh = 80,
   ...rest
 }: ModalProps) {
   return (
@@ -24,7 +26,12 @@ export function Modal({
       destroyOnHidden={destroyOnHidden}
       maskClosable={maskClosable}
       footer={footer}
-      className={[styles.modal, className].filter(Boolean).join(" ")}
+      className={[css.modal, className].filter(Boolean).join(" ")}
+      style={
+        {
+          "--pd-modal-height": `${heightVh}vh`,
+        } as React.CSSProperties
+      }
       {...rest}
     />
   );

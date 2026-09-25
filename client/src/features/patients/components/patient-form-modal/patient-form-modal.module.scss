@@ -1,0 +1,54 @@
+@use "@/styles/tokens" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: $space-5 $space-6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-4;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: $brand-text;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.required {
+  color: $status-danger;
+}
+
+.error {
+  font-size: 12px;
+  color: $status-danger;
+  line-height: 1.4;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-2;
+}

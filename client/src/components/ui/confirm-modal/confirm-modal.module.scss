@@ -1,9 +1,19 @@
 @use "@/styles/tokens" as *;
 
+/* The wrapper fills the modal body (which is a flex column).
+   Body content is centered vertically, actions pinned at bottom. */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
 .body {
   display: flex;
   gap: $space-4;
-  padding: $space-2 0 $space-4;
+  padding: $space-6;
+  flex: 1 1 auto;
+  align-items: flex-start;
 }
 
 .iconWrap {
@@ -24,6 +34,7 @@
   gap: 6px;
   flex: 1;
   min-width: 0;
+  padding-top: 2px;
 }
 
 .title {
@@ -36,7 +47,7 @@
 .description {
   margin: 0;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: $brand-text-secondary;
 }
 
@@ -44,6 +55,8 @@
   display: flex;
   justify-content: flex-end;
   gap: $space-2;
-  padding-top: $space-4;
+  padding: $space-4 $space-6;
   border-top: 1px solid $brand-border;
+  background: #fff;
+  flex: 0 0 auto;
 }

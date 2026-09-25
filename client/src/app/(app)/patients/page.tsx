@@ -1,20 +1,20 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo } from "react";
-import { Card, PageHeader } from "@/components/ui";
+import { useMemo, useState } from "react";
+import { Plus } from "lucide-react";
+import { Button, Card, PageHeader } from "@/components/ui";
 import { usePatients, usePatientStatuses } from "@/features/patients/queries";
 import { PatientsFilters } from "@/features/patients/components/patients-filters";
 import { PatientsTable } from "@/features/patients/components/patients-table";
+import { PatientFormModal } from "@/features/patients/components/patient-form-modal";
 import { useTherapists } from "@/features/therapists/queries";
-import type {
-  PatientListParams,
-  PatientStatus,
-} from "@/features/patients/types";
+import type { PatientListParams, PatientStatus } from "@/features/patients/types";
 
 export default function PatientsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [formOpen, setFormOpen] = useState(false);
 
   const filters: PatientListParams = useMemo(
     () => ({
@@ -76,6 +76,15 @@ export default function PatientsPage() {
             ? `${patients.data.total} total`
             : "Manage patient records"
         }
+        action={
+          <Button
+            variant="primary"
+            icon={<Plus size={14} />}
+            onClick={() => setFormOpen(true)}
+          >
+            Add patient
+          </Button>
+        }
       />
 
       <Card>
@@ -97,6 +106,11 @@ export default function PatientsPage() {
           updateFilters({ page, page_size: pageSize })
         }
         onClearFilters={clearFilters}
+      />
+
+      <PatientFormModal
+        open={formOpen}
+        onClose={() => setFormOpen(false)}
       />
     </div>
   );

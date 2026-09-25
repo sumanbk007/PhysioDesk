@@ -35,33 +35,39 @@ export function ConfirmModal({
       onCancel={onCancel}
       footer={null}
       width={440}
+      heightVh={60}
       maskClosable={!loading}
+      closable={false}
     >
-      <div className={styles.body}>
-        {tone === "danger" && (
-          <div className={styles.iconWrap}>
-            <AlertTriangle size={20} />
+      <div className={styles.wrapper}>
+        <div className={styles.body}>
+          {tone === "danger" && (
+            <div className={styles.iconWrap}>
+              <AlertTriangle size={20} />
+            </div>
+          )}
+
+          <div className={styles.text}>
+            <h3 className={styles.title}>{title}</h3>
+            {description && (
+              <p className={styles.description}>{description}</p>
+            )}
           </div>
-        )}
-
-        <div className={styles.text}>
-          <h3 className={styles.title}>{title}</h3>
-          {description && <p className={styles.description}>{description}</p>}
         </div>
-      </div>
 
-      <div className={styles.actions}>
-        <Button variant="default" onClick={onCancel} disabled={loading}>
-          {cancelText}
-        </Button>
-        <Button
-          variant="primary"
-          tone={tone === "danger" ? "danger" : "default"}
-          onClick={onConfirm}
-          loading={loading}
-        >
-          {confirmText}
-        </Button>
+        <div className={styles.actions}>
+          <Button variant="default" onClick={onCancel} disabled={loading}>
+            {cancelText}
+          </Button>
+          <Button
+            variant="primary"
+            tone={tone === "danger" ? "danger" : "default"}
+            onClick={onConfirm}
+            loading={loading}
+          >
+            {confirmText}
+          </Button>
+        </div>
       </div>
     </Modal>
   );
