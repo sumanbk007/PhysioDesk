@@ -6,11 +6,16 @@ import type {
   ClinicalNoteListParams,
   ClinicalNotePage,
   ClinicalNoteUpdate,
+  Invoice,
+  InvoiceListParams,
+  InvoicePage,
   Patient,
   PatientCreate,
   PatientListParams,
   PatientPage,
   PatientUpdate,
+  Payment,
+  PaymentCreate,
   ProgressRead,
 } from "./types";
 
@@ -88,4 +93,30 @@ export async function fetchPatientProgress(
   patientId: number,
 ): Promise<ProgressRead> {
   return api.get<ProgressRead>(patientEndpoints.progress(patientId));
+}
+
+// ---------------- Billing ----------------
+
+export async function fetchPatientInvoices(
+  patientId: number,
+  params: InvoiceListParams = {},
+): Promise<InvoicePage> {
+  return api.get<InvoicePage>(patientEndpoints.invoices(patientId), params);
+}
+
+export async function fetchInvoicePayments(
+  invoiceId: number,
+): Promise<Payment[]> {
+  return api.get<Payment[]>(`/invoices/${invoiceId}/payments`);
+}
+
+export async function recordPayment(
+  invoiceId: number,
+  payload: PaymentCreate,
+): Promise<Payment> {
+  return api.post<Payment>(`/invoices/${invoiceId}/payments`, payload);
+}
+
+export async function fetchInvoice(invoiceId: number): Promise<Invoice> {
+  return api.get<Invoice>(`/invoices/${invoiceId}`);
 }

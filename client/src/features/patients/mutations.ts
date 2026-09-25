@@ -7,6 +7,7 @@ import {
   createPatient,
   deleteClinicalNote,
   deletePatient,
+  recordPayment,
   updateClinicalNote,
   updatePatient,
 } from "./api";
@@ -15,6 +16,7 @@ import type {
   ClinicalNoteUpdate,
   PatientCreate,
   PatientUpdate,
+  PaymentCreate,
 } from "./types";
 
 // ---------------- Patients ----------------
@@ -99,6 +101,27 @@ export function useDeleteNote(patientId: number) {
       qc.invalidateQueries({ queryKey: queryKeys.patients.all });
       qc.invalidateQueries({
         queryKey: queryKeys.patients.detail(patientId),
+      });
+    },
+  });
+}
+
+// ---------------- Billing ----------------
+
+export function useRecordPayment(patientId: number, invoiceId: number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: PaymentCreate) => recordPayment(invoiceId, payload),
+    onSuccess: () => {
+      qc.invalidateQueries({
+        queryKey: queryKeys.invoices.payments(invoiceId),
+      });
+      qc.invalidateQueries({ queryKey: queryKeys.patients.all });
+      qc.invalidateQueries({
+        queryKey: queryKeys.patients.detail(patientId),
+      });
+      qc.invalidateQueries({
+        queryKey: queryKeys.patients.invoices(patientId, {}),
       });
     },
   });

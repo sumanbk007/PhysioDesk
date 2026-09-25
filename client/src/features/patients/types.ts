@@ -159,3 +159,55 @@ export interface ProgressRead {
   strength: ProgressPoint[];
   milestones: MilestoneItem[];
 }
+
+// ---------- Billing ----------
+
+export type InvoiceStatus = "Due" | "Partial" | "Paid" | "Refunded";
+
+export type PaymentMethod = "Cash" | "Card" | "eSewa" | "Khalti" | "Bank Transfer";
+
+export interface InvoiceListItem {
+  id: number;
+  invoice_number: string;
+  patient_id: number;
+  service: string;
+  amount: string;
+  discount: string;
+  paid_amount: string;
+  status: InvoiceStatus;
+  date: string;
+}
+
+export interface Invoice extends InvoiceListItem {
+  appointment_id: number | null;
+  due_date: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Payment {
+  id: number;
+  invoice_id: number;
+  amount: string;
+  method: PaymentMethod;
+  method_details: Record<string, unknown> | null;
+  note: string | null;
+  is_refund: boolean;
+  created_by: number | null;
+  created_at: string;
+}
+
+export interface PaymentCreate {
+  amount: number;
+  method: PaymentMethod;
+  method_details?: Record<string, unknown> | null;
+  note?: string | null;
+}
+
+export interface InvoiceListParams {
+  page?: number;
+  page_size?: number;
+}
+
+export type InvoicePage = Page<InvoiceListItem>;

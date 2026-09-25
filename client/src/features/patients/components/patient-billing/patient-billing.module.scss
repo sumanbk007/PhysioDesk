@@ -1,0 +1,12 @@
+@use "@/styles/tokens" as *;
+
+.card {
+  :global(.ant-card-body) {
+    padding: 0;
+  }
+}
+
+.header {
+  padding: $space-5 $space-6;
+  border-bottom: 1px solid $brand-border;
+}

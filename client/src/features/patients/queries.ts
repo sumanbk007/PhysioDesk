@@ -6,7 +6,9 @@ import { queryKeys } from "@/services/http/query-keys";
 import { api } from "@/services/http/client";
 import {
   fetchClinicalNote,
+  fetchInvoicePayments,
   fetchPatient,
+  fetchPatientInvoices,
   fetchPatientNotes,
   fetchPatientProgress,
   fetchPatients,
@@ -17,6 +19,7 @@ import type {
   AppointmentListParams,
   AppointmentPage,
   ClinicalNoteListParams,
+  InvoiceListParams,
   PatientListParams,
 } from "./types";
 
@@ -102,5 +105,30 @@ export function usePatientProgress(patientId: number) {
     queryKey: queryKeys.patients.progress(patientId),
     queryFn: () => fetchPatientProgress(patientId),
     enabled: ready && patientId > 0,
+  });
+}
+
+export function usePatientInvoices(
+  patientId: number,
+  params: InvoiceListParams = {},
+) {
+  const ready = useAuthReady();
+  return useQuery({
+    queryKey: queryKeys.patients.invoices(
+      patientId,
+      params as Record<string, unknown>,
+    ),
+    queryFn: () => fetchPatientInvoices(patientId, params),
+    enabled: ready && patientId > 0,
+    placeholderData: (prev) => prev,
+  });
+}
+
+export function useInvoicePayments(invoiceId: number) {
+  const ready = useAuthReady();
+  return useQuery({
+    queryKey: queryKeys.invoices.payments(invoiceId),
+    queryFn: () => fetchInvoicePayments(invoiceId),
+    enabled: ready && invoiceId > 0,
   });
 }

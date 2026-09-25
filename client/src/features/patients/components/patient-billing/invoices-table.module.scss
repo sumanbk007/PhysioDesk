@@ -1,0 +1,53 @@
+@use "@/styles/tokens" as *;
+
+.expandBtn {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: $brand-text-secondary;
+  cursor: pointer;
+  border-radius: 6px;
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.06);
+    color: $brand-text;
+  }
+}
+
+.number {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: $brand-primary-active;
+}
+
+.muted {
+  color: $brand-text-secondary;
+  font-variant-numeric: tabular-nums;
+}
+
+.amounts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end;
+}
+
+.amount {
+  font-weight: 500;
+  color: $brand-text;
+  font-variant-numeric: tabular-nums;
+}
+
+.discount {
+  font-size: 11px;
+  color: $brand-text-muted;
+}
+
+.paid {
+  color: $brand-text-secondary;
+  font-variant-numeric: tabular-nums;
+}

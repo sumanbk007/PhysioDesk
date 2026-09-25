@@ -1,0 +1,77 @@
+@use "@/styles/tokens" as *;
+
+.form {
+  padding: $space-5 $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.summary {
+  background: #f8fafc;
+  border-radius: $radius-control;
+  padding: $space-3 $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.summaryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: $brand-text-secondary;
+}
+
+.summaryValue {
+  font-variant-numeric: tabular-nums;
+  color: $brand-text;
+}
+
+.balanceRow {
+  padding-top: 6px;
+  border-top: 1px solid $brand-border;
+  color: $brand-text;
+  font-weight: 500;
+}
+
+.balanceValue {
+  font-weight: 600;
+  color: $brand-primary-active;
+  font-variant-numeric: tabular-nums;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-4;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: $brand-text;
+}
+
+.required {
+  color: $status-danger;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-2;
+}

@@ -1,16 +1,11 @@
 "use client";
 
-import { Card, EmptyState } from "@/components/ui";
-import { Receipt } from "lucide-react";
+import { useParams } from "next/navigation";
+import { PatientBilling } from "@/features/patients/components/patient-billing";
 
-export default function Page() {
-  return (
-    <Card>
-      <EmptyState
-        icon={<Receipt size={32} />}
-        title="Billing & payments coming soon"
-        description="This tab will be built next. The data is already available via the API."
-      />
-    </Card>
-  );
+export default function PatientBillingPage() {
+  const params = useParams<{ id: string }>();
+  const id = Number(params?.id ?? 0);
+
+  return <PatientBilling patientId={id} />;
 }
