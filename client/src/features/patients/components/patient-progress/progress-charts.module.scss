@@ -1,0 +1,24 @@
+@use "@/styles/tokens" as *;
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.card {
+  :global(.ant-card-body) {
+    padding: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+}
+
+.icon {
+  color: $brand-text-muted;
+}
+
+.emptyWrap {
+  padding: $space-4 0;
+}

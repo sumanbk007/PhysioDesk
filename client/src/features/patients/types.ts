@@ -139,3 +139,23 @@ export interface ClinicalNoteListParams {
 }
 
 export type ClinicalNotePage = Page<ClinicalNoteListItem>;
+
+// ---------- Progress ----------
+
+export interface ProgressPoint {
+  date: string;
+  value: number;
+}
+
+export interface MilestoneItem {
+  date: string;
+  text: string;
+}
+
+export interface ProgressRead {
+  patient_id: number;
+  pain: ProgressPoint[];
+  rom: ProgressPoint[];
+  strength: ProgressPoint[];
+  milestones: MilestoneItem[];
+}

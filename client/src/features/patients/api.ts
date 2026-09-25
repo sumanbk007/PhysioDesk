@@ -11,6 +11,7 @@ import type {
   PatientListParams,
   PatientPage,
   PatientUpdate,
+  ProgressRead,
 } from "./types";
 
 // ---------------- Patients ----------------
@@ -79,4 +80,12 @@ export async function updateClinicalNote(
 
 export async function deleteClinicalNote(noteId: number): Promise<void> {
   return api.del<void>(clinicalNoteEndpoints.detail(noteId));
+}
+
+// ---------------- Progress ----------------
+
+export async function fetchPatientProgress(
+  patientId: number,
+): Promise<ProgressRead> {
+  return api.get<ProgressRead>(patientEndpoints.progress(patientId));
 }

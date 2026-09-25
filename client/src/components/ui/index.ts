@@ -61,3 +61,6 @@ export { Drawer } from "./drawer";
 export type { DrawerProps } from "./drawer";
 
 export { Divider } from "./divider";
+
+export { LineChart } from "./line-chart";
+export type { LineChartPoint } from "./line-chart";

@@ -1,0 +1,22 @@
+@use "@/styles/tokens" as *;
+
+.card {
+  :global(.ant-card-body) {
+    padding: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-5;
+  }
+}
+
+.icon {
+  color: #f59e0b;
+}
+
+.timelineWrap {
+  padding-left: $space-2;
+}
+
+.emptyWrap {
+  padding: $space-4 0;
+}

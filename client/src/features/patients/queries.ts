@@ -8,6 +8,7 @@ import {
   fetchClinicalNote,
   fetchPatient,
   fetchPatientNotes,
+  fetchPatientProgress,
   fetchPatients,
   fetchPatientStatuses,
 } from "./api";
@@ -92,5 +93,14 @@ export function useClinicalNote(noteId: number) {
     queryKey: queryKeys.clinicalNotes.detail(noteId),
     queryFn: () => fetchClinicalNote(noteId),
     enabled: ready && noteId > 0,
+  });
+}
+
+export function usePatientProgress(patientId: number) {
+  const ready = useAuthReady();
+  return useQuery({
+    queryKey: queryKeys.patients.progress(patientId),
+    queryFn: () => fetchPatientProgress(patientId),
+    enabled: ready && patientId > 0,
   });
 }

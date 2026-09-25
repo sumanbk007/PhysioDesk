@@ -1,16 +1,11 @@
 "use client";
 
-import { Card, EmptyState } from "@/components/ui";
-import { LineChart } from "lucide-react";
+import { useParams } from "next/navigation";
+import { PatientProgress } from "@/features/patients/components/patient-progress";
 
-export default function Page() {
-  return (
-    <Card>
-      <EmptyState
-        icon={<LineChart size={32} />}
-        title="Progress tracking coming soon"
-        description="This tab will be built next. The data is already available via the API."
-      />
-    </Card>
-  );
+export default function PatientProgressPage() {
+  const params = useParams<{ id: string }>();
+  const id = Number(params?.id ?? 0);
+
+  return <PatientProgress patientId={id} />;
 }
