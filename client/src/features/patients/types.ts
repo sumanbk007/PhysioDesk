@@ -3,6 +3,12 @@ import type { Page } from "@/services/http/types";
 export type PatientStatus = "Active" | "Completed" | "Due for follow-up";
 export type Gender = "Male" | "Female" | "Other";
 
+export type AppointmentStatus =
+  | "Booked"
+  | "Completed"
+  | "Cancelled"
+  | "No-show";
+
 export interface PatientListItem {
   id: number;
   name: string;
@@ -50,3 +56,22 @@ export interface PatientCreate {
 export type PatientUpdate = Partial<PatientCreate>;
 
 export type PatientPage = Page<PatientListItem>;
+
+// ---------- Appointments (used on Sessions tab + Overview) ----------
+
+export interface AppointmentListItem {
+  id: number;
+  patient_id: number;
+  therapist_id: number;
+  date: string;
+  start_time: string;
+  end_time: string;
+  status: AppointmentStatus;
+}
+
+export interface AppointmentListParams {
+  page?: number;
+  page_size?: number;
+}
+
+export type AppointmentPage = Page<AppointmentListItem>;

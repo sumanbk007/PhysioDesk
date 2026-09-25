@@ -1,0 +1,49 @@
+@use "@/styles/tokens" as *;
+
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-4;
+}
+
+.withDivider {
+  padding-bottom: $space-3;
+  border-bottom: 1px solid $brand-border;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-weight: 600;
+  color: $brand-text;
+  letter-spacing: -0.01em;
+}
+
+.default .title {
+  font-size: 15px;
+}
+
+.large .title {
+  font-size: 18px;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: $brand-text-secondary;
+  line-height: 1.5;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-shrink: 0;
+}

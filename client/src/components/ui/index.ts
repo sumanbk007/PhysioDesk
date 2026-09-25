@@ -32,6 +32,9 @@ export type { EmptyStateProps } from "./empty-state";
 export { PageHeader } from "./page-header";
 export type { PageHeaderProps } from "./page-header";
 
+export { SectionHeader } from "./section-header";
+export type { SectionHeaderProps } from "./section-header";
+
 export { PageLoader } from "./page-loader";
 export type { PageLoaderProps } from "./page-loader";
 

@@ -1,0 +1,59 @@
+@use "@/styles/tokens" as *;
+
+.header {
+  padding-bottom: $space-5;
+  border-bottom: 1px solid $brand-border;
+  margin-bottom: $space-5;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.select {
+  min-width: 180px;
+}
+
+.timelineWrap {
+  padding-left: $space-2;
+}
+
+.subtitleLine {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.description {
+  margin-top: 6px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+  padding-top: $space-5;
+  margin-top: $space-5;
+  border-top: 1px solid $brand-border;
+}
+
+.pageLabel {
+  font-size: 13px;
+  color: $brand-text-secondary;
+  font-variant-numeric: tabular-nums;
+  min-width: 100px;
+  text-align: center;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: $space-3;
+  font-size: 11px;
+  color: $brand-text-muted;
+}
