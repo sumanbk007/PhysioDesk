@@ -108,6 +108,31 @@ export interface ClinicalNote extends ClinicalNoteListItem {
   updated_at: string;
 }
 
+export interface ClinicalNoteCreate {
+  therapist_id: number;
+  appointment_id?: number | null;
+  note_date?: string | null;
+  chief_complaint?: string | null;
+  pain_location?: string | null;
+  pain_score?: number | null;
+  diagnosis?: string | null;
+  assessment?: string | null;
+  rom?: string | null;
+  rom_score?: number | null;
+  strength?: string | null;
+  strength_score?: number | null;
+  special_tests?: string | null;
+  treatment?: string | null;
+  exercises?: string | null;
+  patient_response?: string | null;
+  hep?: string | null;
+  plan?: string | null;
+  therapist_notes?: string | null;
+  milestone?: string | null;
+}
+
+export type ClinicalNoteUpdate = Partial<ClinicalNoteCreate>;
+
 export interface ClinicalNoteListParams {
   page?: number;
   page_size?: number;

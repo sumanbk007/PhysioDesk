@@ -2,14 +2,18 @@ import { api } from "@/services/http/client";
 import { clinicalNoteEndpoints, patientEndpoints } from "./endpoints";
 import type {
   ClinicalNote,
+  ClinicalNoteCreate,
   ClinicalNoteListParams,
   ClinicalNotePage,
+  ClinicalNoteUpdate,
   Patient,
   PatientCreate,
   PatientListParams,
   PatientPage,
   PatientUpdate,
 } from "./types";
+
+// ---------------- Patients ----------------
 
 export async function fetchPatients(
   params: PatientListParams,
@@ -40,6 +44,8 @@ export async function deletePatient(id: number): Promise<void> {
   return api.del<void>(patientEndpoints.detail(id));
 }
 
+// ---------------- Clinical notes ----------------
+
 export async function fetchPatientNotes(
   patientId: number,
   params: ClinicalNoteListParams = {},
@@ -52,4 +58,25 @@ export async function fetchPatientNotes(
 
 export async function fetchClinicalNote(noteId: number): Promise<ClinicalNote> {
   return api.get<ClinicalNote>(clinicalNoteEndpoints.detail(noteId));
+}
+
+export async function createClinicalNote(
+  patientId: number,
+  payload: ClinicalNoteCreate,
+): Promise<ClinicalNote> {
+  return api.post<ClinicalNote>(
+    patientEndpoints.clinicalNotes(patientId),
+    payload,
+  );
+}
+
+export async function updateClinicalNote(
+  noteId: number,
+  payload: ClinicalNoteUpdate,
+): Promise<ClinicalNote> {
+  return api.patch<ClinicalNote>(clinicalNoteEndpoints.detail(noteId), payload);
+}
+
+export async function deleteClinicalNote(noteId: number): Promise<void> {
+  return api.del<void>(clinicalNoteEndpoints.detail(noteId));
 }

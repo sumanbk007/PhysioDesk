@@ -11,6 +11,12 @@
   border-bottom: 1px solid $brand-border;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
 .milestoneTag {
   display: inline-flex;
   align-items: center;
@@ -21,6 +27,7 @@
   color: #b45309;
   font-size: 11px;
   font-weight: 600;
+  margin-right: $space-1;
 }
 
 .milestoneIcon {

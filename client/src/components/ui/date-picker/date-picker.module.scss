@@ -1,0 +1,42 @@
+@use "@/styles/tokens" as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: $brand-text;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.required {
+  color: $status-danger;
+}
+
+.picker {
+  width: 100%;
+
+  :global(.ant-picker) {
+    border-radius: $radius-control;
+    height: 40px;
+  }
+}
+
+.meta {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.hint {
+  color: $brand-text-secondary;
+}
+
+.error {
+  color: $status-danger;
+}

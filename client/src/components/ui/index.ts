@@ -9,6 +9,9 @@ export { SearchInput } from "./search-input";
 export { Select } from "./select";
 export type { SelectOption, SelectProps } from "./select";
 
+export { DatePicker } from "./date-picker";
+export type { DatePickerProps } from "./date-picker";
+
 export { Card } from "./card";
 export type { CardProps } from "./card";
 

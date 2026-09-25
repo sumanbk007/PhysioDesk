@@ -1,14 +1,25 @@
 "use client";
 
-import { FileText, Star } from "lucide-react";
-import { EmptyState, PageLoader, SectionHeader, StatusBadge } from "@/components/ui";
+import { FileText, Pencil, Star, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { App } from "antd";
+import {
+  Button,
+  ConfirmModal,
+  EmptyState,
+  PageLoader,
+  SectionHeader,
+} from "@/components/ui";
 import { formatDate } from "@/lib/utils";
 import { useClinicalNote } from "../../queries";
+import { useDeleteNote } from "../../mutations";
 import { useTherapists } from "@/features/therapists/queries";
+import { NoteFormModal } from "../note-form-modal";
 import styles from "./note-detail.module.scss";
 
 interface NoteDetailProps {
   noteId: number | null;
+  patientId: number;
 }
 
 interface Section {
@@ -48,9 +59,27 @@ function buildSections(note: {
   ].filter((s) => s.value && s.value.trim().length > 0) as Section[];
 }
 
-export function NoteDetail({ noteId }: NoteDetailProps) {
+export function NoteDetail({ noteId, patientId }: NoteDetailProps) {
+  const { message } = App.useApp();
   const note = useClinicalNote(noteId ?? 0);
   const therapists = useTherapists({ page: 1, page_size: 100 });
+  const deleteNote = useDeleteNote(patientId);
+
+  const [editOpen, setEditOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const handleDelete = async () => {
+    if (!note.data) return;
+    try {
+      await deleteNote.mutateAsync(note.data.id);
+      message.success("Note deleted.");
+      setConfirmOpen(false);
+    } catch (err) {
+      const msg =
+        err instanceof Error ? err.message : "Could not delete the note.";
+      message.error(msg);
+    }
+  };
 
   if (!noteId) {
     return (
@@ -84,58 +113,98 @@ export function NoteDetail({ noteId }: NoteDetailProps) {
   const sections = buildSections(n);
 
   return (
-    <article className={styles.detail}>
-      <header className={styles.header}>
-        <SectionHeader
-          title={formatDate(n.note_date, "datetime")}
-          subtitle={therapistName}
-          action={
-            n.milestone ? (
-              <span className={styles.milestoneTag}>
-                <Star size={12} className={styles.milestoneIcon} />
-                Milestone
-              </span>
-            ) : undefined
-          }
-        />
-      </header>
+    <>
+      <article className={styles.detail}>
+        <header className={styles.header}>
+          <SectionHeader
+            title={formatDate(n.note_date, "datetime")}
+            subtitle={therapistName}
+            action={
+              <div className={styles.headerActions}>
+                {n.milestone && (
+                  <span className={styles.milestoneTag}>
+                    <Star size={12} className={styles.milestoneIcon} />
+                    Milestone
+                  </span>
+                )}
+                <Button
+                  variant="default"
+                  size="small"
+                  icon={<Pencil size={13} />}
+                  onClick={() => setEditOpen(true)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="default"
+                  size="small"
+                  tone="danger"
+                  icon={<Trash2 size={13} />}
+                  onClick={() => setConfirmOpen(true)}
+                >
+                  Delete
+                </Button>
+              </div>
+            }
+          />
+        </header>
 
-      <div className={styles.scores}>
-        {n.pain_score !== null && (
-          <div className={styles.score}>
-            <span className={styles.scoreLabel}>Pain</span>
-            <span className={styles.scoreValue}>{n.pain_score}/10</span>
-          </div>
-        )}
-        {n.rom_score !== null && (
-          <div className={styles.score}>
-            <span className={styles.scoreLabel}>ROM</span>
-            <span className={styles.scoreValue}>{n.rom_score}%</span>
-          </div>
-        )}
-        {n.strength_score !== null && (
-          <div className={styles.score}>
-            <span className={styles.scoreLabel}>Strength</span>
-            <span className={styles.scoreValue}>{n.strength_score}/5</span>
-          </div>
-        )}
-      </div>
-
-      {n.milestone && (
-        <div className={styles.milestoneBox}>
-          <Star size={14} className={styles.milestoneIcon} />
-          <span>{n.milestone}</span>
+        <div className={styles.scores}>
+          {n.pain_score !== null && (
+            <div className={styles.score}>
+              <span className={styles.scoreLabel}>Pain</span>
+              <span className={styles.scoreValue}>{n.pain_score}/10</span>
+            </div>
+          )}
+          {n.rom_score !== null && (
+            <div className={styles.score}>
+              <span className={styles.scoreLabel}>ROM</span>
+              <span className={styles.scoreValue}>{n.rom_score}%</span>
+            </div>
+          )}
+          {n.strength_score !== null && (
+            <div className={styles.score}>
+              <span className={styles.scoreLabel}>Strength</span>
+              <span className={styles.scoreValue}>{n.strength_score}/5</span>
+            </div>
+          )}
         </div>
-      )}
 
-      <div className={styles.sections}>
-        {sections.map((s) => (
-          <div key={s.label} className={styles.section}>
-            <div className={styles.sectionLabel}>{s.label}</div>
-            <div className={styles.sectionValue}>{s.value}</div>
+        {n.milestone && (
+          <div className={styles.milestoneBox}>
+            <Star size={14} className={styles.milestoneIcon} />
+            <span>{n.milestone}</span>
           </div>
-        ))}
-      </div>
-    </article>
+        )}
+
+        <div className={styles.sections}>
+          {sections.map((s) => (
+            <div key={s.label} className={styles.section}>
+              <div className={styles.sectionLabel}>{s.label}</div>
+              <div className={styles.sectionValue}>{s.value}</div>
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <NoteFormModal
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        patientId={patientId}
+        note={n}
+      />
+
+      <ConfirmModal
+        open={confirmOpen}
+        title="Delete this note?"
+        description="This will permanently remove the treatment record. The patient's session count will be recomputed."
+        confirmText="Delete note"
+        cancelText="Cancel"
+        tone="danger"
+        loading={deleteNote.isPending}
+        onConfirm={handleDelete}
+        onCancel={() => setConfirmOpen(false)}
+      />
+    </>
   );
 }
