@@ -40,6 +40,18 @@
   font-size: 14px;
   font-weight: 600;
   color: $brand-text;
+  flex: 1;
+}
+
+.viewAll {
+  font-size: 12px;
+  font-weight: 500;
+  color: $brand-primary-active;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .progress {
@@ -74,4 +86,29 @@
   font-size: 13px;
   color: $brand-text-muted;
   padding: $space-2 0;
+}
+
+.next {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nextDate {
+  font-size: 16px;
+  font-weight: 600;
+  color: $brand-text;
+}
+
+.nextMeta {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: 13px;
+  color: $brand-text-secondary;
+  flex-wrap: wrap;
+}
+
+.dot {
+  opacity: 0.5;
 }
