@@ -1,0 +1,103 @@
+@use "@/styles/tokens" as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: $brand-text-secondary;
+  text-decoration: none;
+  width: fit-content;
+  transition: color $duration-fast;
+
+  &:hover {
+    color: $brand-primary-active;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-4;
+  flex-wrap: wrap;
+}
+
+.skeleton {
+  flex: 1;
+  max-width: 420px;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  min-width: 0;
+  flex: 1;
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.name {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: $brand-text;
+  line-height: 1.15;
+}
+
+.meta {
+  font-size: 13px;
+  color: $brand-text-secondary;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-shrink: 0;
+}
+
+.notFound {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-8 $space-4;
+  text-align: center;
+  align-items: center;
+}
+
+.notFoundTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: $brand-text;
+}
+
+.notFoundText {
+  font-size: 14px;
+  color: $brand-text-secondary;
+  margin-bottom: $space-2;
+}
+
+.notFoundLink {
+  font-size: 13px;
+  color: $brand-primary-active;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

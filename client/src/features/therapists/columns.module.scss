@@ -1,0 +1,20 @@
+@use "@/styles/tokens" as *;
+
+.nameLink {
+  color: $brand-primary-active;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.mono {
+  font-variant-numeric: tabular-nums;
+  color: $brand-text-secondary;
+}
+
+.muted {
+  color: $brand-text-secondary;
+}
