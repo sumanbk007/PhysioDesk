@@ -1,0 +1,63 @@
+@use "@/styles/tokens" as *;
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  border-bottom: 1px solid $brand-border;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $brand-text-secondary;
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color $duration-fast, border-color $duration-fast;
+
+  &:hover {
+    color: $brand-text;
+  }
+}
+
+.active {
+  color: $brand-primary-active;
+  border-bottom-color: $brand-primary;
+}
+
+.label {
+  line-height: 1;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.06);
+  color: $brand-text-secondary;
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.active .badge {
+  background: rgba(20, 184, 166, 0.15);
+  color: $brand-primary-active;
+}

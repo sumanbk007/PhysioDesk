@@ -1,0 +1,47 @@
+@use "@/styles/tokens" as *;
+
+.list {
+  display: grid;
+  gap: $space-3;
+  margin: 0;
+}
+
+.one {
+  grid-template-columns: 1fr;
+}
+
+.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-3 $space-6;
+}
+
+@media (max-width: 640px) {
+  .two {
+    grid-template-columns: 1fr;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: $brand-text-secondary;
+  margin: 0;
+}
+
+.value {
+  font-size: 14px;
+  color: $brand-text;
+  margin: 0;
+  word-break: break-word;
+}
+
+.empty {
+  color: $brand-text-muted;
+}

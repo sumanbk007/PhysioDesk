@@ -1,0 +1,17 @@
+@use "@/styles/tokens" as *;
+
+.drawer {
+  :global(.ant-drawer-header) {
+    border-bottom: 1px solid $brand-border;
+    padding: 16px 20px;
+  }
+
+  :global(.ant-drawer-body) {
+    padding: 20px;
+  }
+
+  :global(.ant-drawer-footer) {
+    border-top: 1px solid $brand-border;
+    padding: 12px 20px;
+  }
+}

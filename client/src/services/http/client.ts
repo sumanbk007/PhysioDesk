@@ -15,9 +15,11 @@ export class ApiError extends Error {
   }
 }
 
+type QueryParams = Record<string, string | number | boolean | undefined | null>;
+
 interface RequestOptions {
   body?: unknown;
-  params?: Record<string, unknown>;
+  params?: QueryParams;
 }
 
 async function request<T>(
@@ -85,8 +87,8 @@ async function request<T>(
 }
 
 export const api = {
-  get: <T>(path: string, params?: Record<string, unknown>) =>
-    request<T>("GET", path, { params }),
+  get: <T>(path: string, params?: object) =>
+    request<T>("GET", path, { params: params as QueryParams }),
   post: <T>(path: string, body?: unknown) => request<T>("POST", path, { body }),
   patch: <T>(path: string, body?: unknown) =>
     request<T>("PATCH", path, { body }),

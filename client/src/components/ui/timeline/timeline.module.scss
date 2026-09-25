@@ -1,0 +1,98 @@
+@use "@/styles/tokens" as *;
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: $brand-border;
+}
+
+.item {
+  position: relative;
+  padding-left: $space-6;
+  display: flex;
+  gap: $space-3;
+}
+
+.dot {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  border: 2px solid #fff;
+  background: $brand-text-muted;
+  box-shadow: 0 0 0 1px $brand-border;
+}
+
+.success {
+  background: $status-success;
+}
+
+.warning {
+  background: $status-warning;
+}
+
+.danger {
+  background: $status-danger;
+}
+
+.default {
+  background: $brand-primary;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.date {
+  font-size: 12px;
+  color: $brand-text-secondary;
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: $brand-text;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: $brand-text-secondary;
+}
+
+.description {
+  font-size: 13px;
+  color: $brand-text;
+  line-height: 1.5;
+}
+
+.action {
+  margin-top: 4px;
+}
