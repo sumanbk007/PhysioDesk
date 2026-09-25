@@ -18,6 +18,12 @@ export type { TableProps } from "./table";
 export { Popconfirm } from "./popconfirm";
 export type { PopconfirmProps } from "./popconfirm";
 
+export { Modal } from "./modal";
+export type { ModalProps } from "./modal";
+
+export { ConfirmModal } from "./confirm-modal";
+export type { ConfirmModalProps } from "./confirm-modal";
+
 export { StatusBadge } from "./status-badge";
 
 export { EmptyState } from "./empty-state";

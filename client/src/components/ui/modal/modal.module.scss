@@ -1,0 +1,39 @@
+@use "@/styles/tokens" as *;
+
+.modal {
+  :global(.ant-modal-content) {
+    border-radius: $radius-card;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  :global(.ant-modal-header) {
+    padding: $space-5 $space-6;
+    border-bottom: 1px solid $brand-border;
+    margin: 0;
+  }
+
+  :global(.ant-modal-title) {
+    font-size: 16px;
+    font-weight: 600;
+    color: $brand-text;
+  }
+
+  :global(.ant-modal-body) {
+    padding: $space-5 $space-6;
+  }
+
+  :global(.ant-modal-footer) {
+    padding: $space-4 $space-6;
+    border-top: 1px solid $brand-border;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-2;
+  }
+
+  :global(.ant-modal-close) {
+    top: 16px;
+    right: 16px;
+  }
+}
