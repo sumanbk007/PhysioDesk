@@ -1,0 +1,77 @@
+@use "@/styles/tokens" as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-4;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.card {
+  :global(.ant-card-body) {
+    padding: $space-5;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding-bottom: $space-3;
+  border-bottom: 1px solid $brand-border;
+}
+
+.icon {
+  color: $brand-primary-active;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: $brand-text;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: #f1f5f9;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: $brand-primary;
+  border-radius: 9999px;
+  transition: width 400ms $ease-out;
+}
+
+.progressLabel {
+  font-size: 12px;
+  color: $brand-text-secondary;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  font-size: 13px;
+  color: $brand-text-muted;
+  padding: $space-2 0;
+}

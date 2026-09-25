@@ -1,0 +1,11 @@
+@use "@/styles/tokens" as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.content {
+  min-height: 300px;
+}
