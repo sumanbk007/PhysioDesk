@@ -1,0 +1,21 @@
+@use "@/styles/tokens" as *;
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.loading {
+  color: $brand-text-secondary;
+  font-size: 13px;
+  padding: $space-4 0;
+}
+
+.actions {
+  display: flex;
+  gap: $space-2;
+  justify-content: flex-end;
+  padding-top: $space-4;
+  border-top: 1px solid $brand-border;
+}

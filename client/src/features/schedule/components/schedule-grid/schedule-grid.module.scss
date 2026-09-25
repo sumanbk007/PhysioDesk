@@ -1,0 +1,220 @@
+@use "@/styles/tokens" as *;
+
+.card {
+  :global(.ant-card-body) {
+    padding: 0;
+  }
+}
+
+.scroll {
+  max-height: calc(100vh - 260px);
+  overflow: auto;
+  border-radius: $radius-card;
+}
+
+.grid {
+  display: grid;
+  background: $brand-border;
+  gap: 1px;
+  min-width: 100%;
+}
+
+.headerCell {
+  background: #f8fafc;
+  padding: $space-3 $space-4;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: 1px solid $brand-border;
+}
+
+.corner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.therapistHeader {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  min-width: 0;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(20, 184, 166, 0.15);
+  color: $brand-primary-active;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.avatarOff {
+  background: rgba(100, 116, 139, 0.15);
+  color: $brand-text-secondary;
+}
+
+.therapistInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.therapistName {
+  font-size: 13px;
+  font-weight: 600;
+  color: $brand-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.therapistMeta {
+  font-size: 11px;
+  color: $brand-text-secondary;
+  font-variant-numeric: tabular-nums;
+}
+
+.therapistMetaOff {
+  font-size: 11px;
+  color: $status-warning;
+  font-weight: 500;
+}
+
+.timeLabel {
+  background: #fafafa;
+  font-size: 11px;
+  font-weight: 500;
+  color: $brand-text-secondary;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: $space-2;
+  font-variant-numeric: tabular-nums;
+  min-height: 64px;
+}
+
+.leftCell {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.slotCell {
+  background: #fff;
+  min-height: 64px;
+  padding: $space-2 $space-3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2px;
+  text-align: left;
+  border: none;
+  font-family: inherit;
+  transition: background $duration-fast;
+}
+
+.slotFree {
+  cursor: pointer;
+  background: #fff;
+
+  &:hover {
+    background: rgba(20, 184, 166, 0.06);
+  }
+}
+
+.slotFreeLabel {
+  font-size: 12px;
+  color: $brand-text-muted;
+  opacity: 0.7;
+  transition: opacity $duration-fast, color $duration-fast;
+
+  .slotFree:hover & {
+    opacity: 1;
+    color: $brand-primary-active;
+    font-weight: 500;
+  }
+}
+
+.slotBooked {
+  cursor: pointer;
+  background: rgba(20, 184, 166, 0.06);
+  border-left: 3px solid $brand-primary;
+
+  &:hover {
+    background: rgba(20, 184, 166, 0.12);
+  }
+}
+
+.slotPatient {
+  font-size: 13px;
+  font-weight: 600;
+  color: $brand-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slotStatus {
+  font-size: 11px;
+  color: $brand-text-secondary;
+}
+
+.slotOff {
+  background: repeating-linear-gradient(
+    45deg,
+    #f8fafc,
+    #f8fafc 6px,
+    #f1f5f9 6px,
+    #f1f5f9 12px
+  );
+}
+
+.slotOutside {
+  background: #fafafa;
+}
+
+.toneInfo {
+  border-left-color: $status-info;
+  background: rgba(14, 165, 233, 0.06);
+
+  &:hover {
+    background: rgba(14, 165, 233, 0.12);
+  }
+}
+
+.toneSuccess {
+  border-left-color: $status-success;
+  background: rgba(16, 185, 129, 0.06);
+
+  &:hover {
+    background: rgba(16, 185, 129, 0.12);
+  }
+}
+
+.toneDanger {
+  border-left-color: $status-danger;
+  background: rgba(244, 63, 94, 0.06);
+
+  &:hover {
+    background: rgba(244, 63, 94, 0.12);
+  }
+}
+
+.toneNeutral {
+  border-left-color: $brand-text-muted;
+  background: rgba(100, 116, 139, 0.05);
+
+  &:hover {
+    background: rgba(100, 116, 139, 0.1);
+  }
+}

@@ -9,6 +9,9 @@ export { SearchInput } from "./search-input";
 export { Select } from "./select";
 export type { SelectOption, SelectProps } from "./select";
 
+export { AsyncSearchSelect } from "./async-search-select";
+export type { AsyncSearchOption } from "./async-search-select";
+
 export { DatePicker } from "./date-picker";
 export type { DatePickerProps } from "./date-picker";
 
