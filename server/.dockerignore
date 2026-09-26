@@ -1,0 +1,28 @@
+# Virtualenv and caches
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env files (never bake secrets into the image)
+.env
+.env.local
+
+# Git
+.git/
+.gitignore
+
+# Uploads (persisted in a volume, not the image)
+app/static/uploads/reports/*
+!app/static/uploads/reports/.gitkeep
+
+# Dev tooling
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Docs
+README.md

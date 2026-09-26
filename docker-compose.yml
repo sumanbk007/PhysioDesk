@@ -17,5 +17,37 @@ services:
       timeout: 5s
       retries: 5
 
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: physiodesk-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://physiodesk:physiodesk@db:5432/physiodesk
+      SECRET_KEY: change-me-in-production-please-use-32-chars-min
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: "1440"
+      CORS_ORIGINS: http://localhost:3000
+      APP_NAME: PhysioDesk
+      ENVIRONMENT: production
+      DEBUG: "false"
+      SEED_ADMIN_USERNAME: frontdesk
+      SEED_ADMIN_PASSWORD: frontdesk123
+      SEED_ADMIN_FULLNAME: "Sunita (Front Desk)"
+      UPLOAD_DIR: app/static/uploads/reports
+      MAX_UPLOAD_MB: "10"
+      SEED_ON_BOOT: "false"
+    ports:
+      - "8000:8000"
+    volumes:
+      - uploads:/app/app/static/uploads/reports
+    entrypoint: ["/app/entrypoint.sh"]
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
 volumes:
   pgdata:
+  uploads:
