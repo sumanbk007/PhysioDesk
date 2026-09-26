@@ -91,6 +91,24 @@ export const api = {
   del: <T>(path: string) => request<T>("DELETE", path),
   upload: <T>(path: string, formData: FormData) =>
     request<T>("POST", path, { formData }),
+  view: async (path: string): Promise<void> => {
+    const token = useAuthStore.getState().token;
+    const headers: Record<string, string> = {};
+    if (token) headers.Authorization = `Bearer ${token}`;
+
+    const url = `${BASE_URL}${path}`;
+    const res = await fetch(url, { headers });
+
+    if (!res.ok) {
+      throw new ApiError(res.status, "view_error", "Could not open file.");
+    }
+
+    const blob = await res.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    window.open(objectUrl, "_blank", "noopener,noreferrer");
+    // Give the new tab time to load before revoking the URL
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
+  },
   download: async (path: string, filename: string): Promise<void> => {
     const token = useAuthStore.getState().token;
     const headers: Record<string, string> = {};

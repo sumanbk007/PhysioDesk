@@ -1,6 +1,6 @@
 "use client";
 
-import { FileImage, FileText, Download, Trash2 } from "lucide-react";
+import { FileImage, FileText, Download, Trash2, Eye } from "lucide-react";
 import { useState } from "react";
 import { App } from "antd";
 import { Button, ConfirmModal } from "@/components/ui";
@@ -48,6 +48,15 @@ export function ReportCard({ patientId, report }: ReportCardProps) {
     }
   };
 
+  const handleView = async () => {
+    try {
+      await api.view(`/patients/${patientId}/reports/${report.id}/download`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Could not open file.";
+      message.error(msg);
+    }
+  };
+
   const handleDelete = async () => {
     try {
       await del.mutateAsync(report.id);
@@ -80,6 +89,14 @@ export function ReportCard({ patientId, report }: ReportCardProps) {
         </div>
 
         <div className={styles.actions}>
+          <button
+            type="button"
+            className={styles.action}
+            onClick={handleView}
+            title="View"
+          >
+            <Eye size={15} />
+          </button>
           <button
             type="button"
             className={styles.action}
