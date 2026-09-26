@@ -1,8 +1,0 @@
-@use "@/styles/tokens" as *;
-
-.popconfirm {
-  :global(.ant-popover-inner) {
-    border-radius: $radius-card;
-    box-shadow: $shadow-modal;
-  }
-}

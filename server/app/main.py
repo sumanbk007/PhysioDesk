@@ -1,11 +1,11 @@
-# Import this FIRST so all ORM models register with SQLAlchemy before any
-# route tries to use them. Without it, string-based relationships like
-# Mapped["ReportFile"] can't be resolved at runtime.
-from app.db import base as _models_registry  # noqa: F401
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
+# Import Base FIRST so all models register with SQLAlchemy.
+from app.db import base as _models_registry  # noqa: F401
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.exception_handlers import register_exception_handlers
@@ -36,6 +36,17 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     app.include_router(api_router, prefix=settings.API_V1_PREFIX)
+
+    # Serve uploaded report files.
+    # Mounted at /static/uploads/reports so the URL structure matches
+    # file_storage_service.public_url().
+    uploads_dir = Path(settings.UPLOAD_DIR)
+    uploads_dir.mkdir(parents=True, exist_ok=True)
+    app.mount(
+        "/static/uploads/reports",
+        StaticFiles(directory=str(uploads_dir)),
+        name="report-uploads",
+    )
 
     return app
 

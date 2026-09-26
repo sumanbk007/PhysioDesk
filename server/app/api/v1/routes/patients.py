@@ -160,3 +160,60 @@ def list_patient_invoices(
         page_size=pagination.page_size,
         pages=pages,
     )
+
+
+# ---------- Reports (file uploads) ----------
+
+from fastapi import File, Form, UploadFile
+from app.core.dependencies import get_current_user
+from app.models.user import User as AuthUser
+from app.schemas.report_file import ReportFileWithUrl
+from app.services import report_file_service as report_service
+
+
+@router.get(
+    "/{patient_id}/reports",
+    response_model=list[ReportFileWithUrl],
+    summary="List uploaded reports for a patient",
+)
+def list_reports(
+    patient_id: int,
+    db: Session = Depends(get_db),
+) -> list[ReportFileWithUrl]:
+    return report_service.list_for_patient(db, patient_id)
+
+
+@router.post(
+    "/{patient_id}/reports",
+    response_model=ReportFileWithUrl,
+    status_code=status.HTTP_201_CREATED,
+    summary="Upload a report file (X-ray, MRI, assessment PDF, etc.)",
+)
+async def upload_report(
+    patient_id: int,
+    file: UploadFile = File(..., description="PDF, JPG, PNG, or WEBP up to 10 MB"),
+    description: str | None = Form(None),
+    db: Session = Depends(get_db),
+    current_user: AuthUser = Depends(get_current_user),
+) -> ReportFileWithUrl:
+    return await report_service.upload(
+        db,
+        patient_id,
+        file,
+        description=description,
+        uploaded_by=current_user.id,
+    )
+
+
+@router.delete(
+    "/{patient_id}/reports/{report_id}",
+    response_model=MessageResponse,
+    summary="Delete a report file",
+)
+def delete_report(
+    patient_id: int,
+    report_id: int,
+    db: Session = Depends(get_db),
+) -> MessageResponse:
+    report_service.delete(db, patient_id, report_id)
+    return MessageResponse(message=f"Report {report_id} deleted.")
