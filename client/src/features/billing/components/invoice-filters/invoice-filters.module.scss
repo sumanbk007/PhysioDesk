@@ -1,0 +1,23 @@
+@use "@/styles/tokens" as *;
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.search {
+  flex: 1;
+  min-width: 240px;
+}
+
+.select {
+  width: 180px;
+}
+
+@media (max-width: 720px) {
+  .select {
+    width: 100%;
+  }
+}
