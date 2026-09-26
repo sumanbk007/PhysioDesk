@@ -17,6 +17,7 @@ import type {
   Payment,
   PaymentCreate,
   ProgressRead,
+  ReportFile,
 } from "./types";
 
 // ---------------- Patients ----------------
@@ -119,4 +120,33 @@ export async function recordPayment(
 
 export async function fetchInvoice(invoiceId: number): Promise<Invoice> {
   return api.get<Invoice>(`/invoices/${invoiceId}`);
+}
+
+// ---------------- Reports ----------------
+
+export async function fetchPatientReports(
+  patientId: number,
+): Promise<ReportFile[]> {
+  return api.get<ReportFile[]>(patientEndpoints.reports(patientId));
+}
+
+export async function uploadReport(
+  patientId: number,
+  file: File,
+  description?: string,
+): Promise<ReportFile> {
+  const formData = new FormData();
+  formData.append("file", file);
+  if (description) formData.append("description", description);
+
+  return api.upload<ReportFile>(patientEndpoints.reports(patientId), formData);
+}
+
+export async function deleteReport(
+  patientId: number,
+  reportId: number,
+): Promise<void> {
+  return api.del<void>(
+    `${patientEndpoints.reports(patientId)}/${reportId}`,
+  );
 }

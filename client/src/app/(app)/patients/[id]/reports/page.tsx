@@ -1,16 +1,11 @@
 "use client";
 
-import { Card, EmptyState } from "@/components/ui";
-import { FileText } from "lucide-react";
+import { useParams } from "next/navigation";
+import { PatientReports } from "@/features/patients/components/patient-reports";
 
-export default function Page() {
-  return (
-    <Card>
-      <EmptyState
-        icon={<FileText size={32} />}
-        title="Reports & documents coming soon"
-        description="This tab will be built next. The data is already available via the API."
-      />
-    </Card>
-  );
+export default function PatientReportsPage() {
+  const params = useParams<{ id: string }>();
+  const id = Number(params?.id ?? 0);
+
+  return <PatientReports patientId={id} />;
 }

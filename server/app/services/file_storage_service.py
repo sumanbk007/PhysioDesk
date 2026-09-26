@@ -23,7 +23,7 @@ ALLOWED_MIME_TYPES = {
 }
 
 
-def _upload_dir() -> Path:
+def upload_dir() -> Path:
     p = Path(settings.UPLOAD_DIR)
     p.mkdir(parents=True, exist_ok=True)
     return p
@@ -46,7 +46,7 @@ def save(file: UploadFile, content: bytes) -> tuple[str, int]:
 
     ext = Path(file.filename or "file").suffix
     unique = f"{uuid.uuid4().hex}{ext}"
-    target = _upload_dir() / unique
+    target = upload_dir() / unique
 
     target.write_bytes(content)
     log.info("Saved report file: %s (%d bytes)", target, size)
@@ -57,7 +57,7 @@ def save(file: UploadFile, content: bytes) -> tuple[str, int]:
 
 def delete(storage_path: str) -> None:
     """Best-effort delete. Missing files are not an error."""
-    target = _upload_dir() / storage_path
+    target = upload_dir() / storage_path
     try:
         target.unlink(missing_ok=True)
     except OSError as e:

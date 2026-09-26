@@ -7,9 +7,11 @@ import {
   createPatient,
   deleteClinicalNote,
   deletePatient,
+  deleteReport,
   recordPayment,
   updateClinicalNote,
   updatePatient,
+  uploadReport,
 } from "./api";
 import type {
   ClinicalNoteCreate,
@@ -123,6 +125,34 @@ export function useRecordPayment(patientId: number, invoiceId: number) {
       qc.invalidateQueries({
         queryKey: queryKeys.patients.invoices(patientId, {}),
       });
+    },
+  });
+}
+
+// ---------------- Reports ----------------
+
+export function useUploadReport(patientId: number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      file,
+      description,
+    }: {
+      file: File;
+      description?: string;
+    }) => uploadReport(patientId, file, description),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["patients", patientId, "reports"] });
+    },
+  });
+}
+
+export function useDeleteReport(patientId: number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (reportId: number) => deleteReport(patientId, reportId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["patients", patientId, "reports"] });
     },
   });
 }

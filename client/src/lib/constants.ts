@@ -78,3 +78,11 @@ export const DAY_ABBREV = [
   "Sun",
 ] as const;
 export type DayAbbrev = (typeof DAY_ABBREV)[number];
+
+/** Origin of the backend API, without the /api/v1 prefix.
+ * Used to build absolute URLs to static uploads. */
+export const API_ORIGIN =
+  (process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/v1").replace(
+    /\/api\/v1\/?$/,
+    "",
+  );

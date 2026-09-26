@@ -11,6 +11,7 @@ import {
   fetchPatientInvoices,
   fetchPatientNotes,
   fetchPatientProgress,
+  fetchPatientReports,
   fetchPatients,
   fetchPatientStatuses,
 } from "./api";
@@ -130,5 +131,14 @@ export function useInvoicePayments(invoiceId: number) {
     queryKey: queryKeys.invoices.payments(invoiceId),
     queryFn: () => fetchInvoicePayments(invoiceId),
     enabled: ready && invoiceId > 0,
+  });
+}
+
+export function usePatientReports(patientId: number) {
+  const ready = useAuthReady();
+  return useQuery({
+    queryKey: ["patients", patientId, "reports"],
+    queryFn: () => fetchPatientReports(patientId),
+    enabled: ready && patientId > 0,
   });
 }

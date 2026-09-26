@@ -1,0 +1,72 @@
+@use "@/styles/tokens" as *;
+
+.body {
+  padding: $space-5 $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.dragger {
+  :global(.ant-upload-drag) {
+    border: 1px dashed $brand-border;
+    border-radius: $radius-card;
+    background: #fafbfc;
+    padding: $space-6 $space-4;
+    transition: border-color $duration-fast, background $duration-fast;
+
+    &:hover {
+      border-color: $brand-primary;
+      background: rgba(20, 184, 166, 0.02);
+    }
+  }
+}
+
+.dropContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  text-align: center;
+}
+
+.dropIcon {
+  color: $brand-primary-active;
+  margin-bottom: $space-2;
+}
+
+.dropTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: $brand-text;
+}
+
+.dropHint {
+  font-size: 12px;
+  color: $brand-text-secondary;
+}
+
+.selectedFile {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-control;
+  background: rgba(20, 184, 166, 0.06);
+  border: 1px solid rgba(20, 184, 166, 0.2);
+  font-size: 13px;
+  color: $brand-text;
+}
+
+.selectedSize {
+  margin-left: auto;
+  font-size: 11px;
+  color: $brand-text-secondary;
+  font-variant-numeric: tabular-nums;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-2;
+}

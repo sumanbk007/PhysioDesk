@@ -164,7 +164,12 @@ export interface ProgressRead {
 
 export type InvoiceStatus = "Due" | "Partial" | "Paid" | "Refunded";
 
-export type PaymentMethod = "Cash" | "Card" | "eSewa" | "Khalti" | "Bank Transfer";
+export type PaymentMethod =
+  | "Cash"
+  | "Card"
+  | "eSewa"
+  | "Khalti"
+  | "Bank Transfer";
 
 export interface InvoiceListItem {
   id: number;
@@ -211,3 +216,17 @@ export interface InvoiceListParams {
 }
 
 export type InvoicePage = Page<InvoiceListItem>;
+
+// ---------- Report files ----------
+
+export interface ReportFile {
+  id: number;
+  patient_id: number;
+  filename: string;
+  mime_type: string;
+  size_bytes: number;
+  description: string | null;
+  uploaded_by: number | null;
+  uploaded_at: string;
+  url: string;
+}

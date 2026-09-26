@@ -161,14 +161,16 @@ def list_patient_invoices(
         pages=pages,
     )
 
-
 # ---------- Reports (file uploads) ----------
 
+from pathlib import Path as FilePath
 from fastapi import File, Form, UploadFile
+from fastapi.responses import FileResponse
 from app.core.dependencies import get_current_user
+from app.core.exceptions import NotFoundError
 from app.models.user import User as AuthUser
 from app.schemas.report_file import ReportFileWithUrl
-from app.services import report_file_service as report_service
+from app.services import file_storage_service, report_file_service as report_service
 
 
 @router.get(
@@ -202,6 +204,35 @@ async def upload_report(
         file,
         description=description,
         uploaded_by=current_user.id,
+    )
+
+
+@router.get(
+    "/{patient_id}/reports/{report_id}/download",
+    summary="Download a report file (forces browser download)",
+)
+def download_report(
+    patient_id: int,
+    report_id: int,
+    db: Session = Depends(get_db),
+) -> FileResponse:
+    row = report_service.get_or_404(db, report_id)
+    if row.patient_id != patient_id:
+        raise NotFoundError(
+            f"Report {report_id} does not belong to patient {patient_id}."
+        )
+
+    file_path: FilePath = file_storage_service.upload_dir() / row.storage_path
+    if not file_path.exists():
+        raise NotFoundError("File is missing from storage.")
+
+    return FileResponse(
+        file_path,
+        media_type=row.mime_type,
+        filename=row.filename,
+        headers={
+            "Content-Disposition": f'attachment; filename="{row.filename}"'
+        },
     )
 
 

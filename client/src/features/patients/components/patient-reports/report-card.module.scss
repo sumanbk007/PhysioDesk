@@ -1,0 +1,93 @@
+@use "@/styles/tokens" as *;
+
+.card {
+  display: flex;
+  gap: $space-4;
+  padding: $space-4;
+  border-radius: $radius-card;
+  border: 1px solid $brand-border;
+  background: #fff;
+  transition: box-shadow $duration-fast, border-color $duration-fast;
+  align-items: flex-start;
+
+  &:hover {
+    border-color: rgba(20, 184, 166, 0.35);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+  }
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(20, 184, 166, 0.1);
+  color: $brand-primary-active;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filename {
+  font-size: 14px;
+  font-weight: 500;
+  color: $brand-text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.description {
+  font-size: 12px;
+  color: $brand-text-secondary;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.meta {
+  font-size: 11px;
+  color: $brand-text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.action {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: $brand-text-secondary;
+  cursor: pointer;
+  transition: background $duration-fast, color $duration-fast;
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.06);
+    color: $brand-text;
+  }
+}
+
+.danger:hover {
+  background: rgba(244, 63, 94, 0.1);
+  color: $status-danger;
+}
