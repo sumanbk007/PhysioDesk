@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { LoginForm } from "@/features/auth";
 import Link from "next/link";
+import { PageLoader } from "@/components/ui";
 
 export default function LoginPage() {
   return (
@@ -21,7 +23,9 @@ export default function LoginPage() {
         </p>
       </div>
 
-      <LoginForm />
+      <Suspense fallback={<PageLoader />}>
+        <LoginForm />
+      </Suspense>
 
       <div className="text-xs text-slate-400 flex items-center gap-2">
         <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
