@@ -171,6 +171,12 @@ export type PaymentMethod =
   | "Khalti"
   | "Bank Transfer";
 
+export interface InvoiceLineItem {
+  title: string;
+  amount: string;
+  date: string | null;
+}
+
 export interface InvoiceListItem {
   id: number;
   invoice_number: string;
@@ -181,6 +187,7 @@ export interface InvoiceListItem {
   paid_amount: string;
   status: InvoiceStatus;
   date: string;
+  line_items: InvoiceLineItem[];
 }
 
 export interface Invoice extends InvoiceListItem {

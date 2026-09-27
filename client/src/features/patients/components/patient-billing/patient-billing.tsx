@@ -1,13 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Receipt } from "lucide-react";
-import { Card, EmptyState, PageLoader, SectionHeader } from "@/components/ui";
+import { Plus, Receipt } from "lucide-react";
+import {
+  Button,
+  Card,
+  EmptyState,
+  PageLoader,
+  SectionHeader,
+} from "@/components/ui";
 import { usePatientInvoices } from "../../queries";
 import type { InvoiceListItem } from "../../types";
 import { InvoicesTable } from "./invoices-table";
 import { PaymentHistoryPanel } from "./payment-history-panel";
 import { RecordPaymentModal } from "./record-payment-modal";
+import { InvoiceFormModal } from "../invoice-form-modal";
 import styles from "./patient-billing.module.scss";
 
 interface PatientBillingProps {
@@ -21,6 +28,7 @@ export function PatientBilling({ patientId }: PatientBillingProps) {
   const [paymentInvoice, setPaymentInvoice] = useState<InvoiceListItem | null>(
     null,
   );
+  const [createOpen, setCreateOpen] = useState(false);
 
   const invoices = usePatientInvoices(patientId, { page, page_size: pageSize });
 
@@ -48,18 +56,6 @@ export function PatientBilling({ patientId }: PatientBillingProps) {
   const items = invoices.data?.items ?? [];
   const total = invoices.data?.total ?? 0;
 
-  if (!invoices.isLoading && items.length === 0) {
-    return (
-      <Card>
-        <EmptyState
-          icon={<Receipt size={32} />}
-          title="No invoices yet"
-          description="Invoices for this patient will appear here."
-        />
-      </Card>
-    );
-  }
-
   return (
     <>
       <Card padded={false} className={styles.card}>
@@ -67,25 +63,54 @@ export function PatientBilling({ patientId }: PatientBillingProps) {
           <SectionHeader
             title="Invoices"
             subtitle={`${total} ${total === 1 ? "invoice" : "invoices"}`}
+            action={
+              <Button
+                variant="primary"
+                icon={<Plus size={14} />}
+                onClick={() => setCreateOpen(true)}
+              >
+                New invoice
+              </Button>
+            }
           />
         </div>
 
-        <InvoicesTable
-          data={items}
-          total={total}
-          loading={invoices.isLoading}
-          page={page}
-          pageSize={pageSize}
-          onPageChange={handlePageChange}
-          expandedRowKeys={expandedRowKeys}
-          onToggleExpand={handleToggleExpand}
-          renderExpandedRow={(invoice) => (
-            <PaymentHistoryPanel
-              invoiceId={invoice.id}
-              onRecordPayment={handleOpenPayment}
+        {items.length === 0 && !invoices.isLoading ? (
+          <div className={styles.empty}>
+            <EmptyState
+              icon={<Receipt size={32} />}
+              title="No invoices yet"
+              description="Create the first invoice for this patient."
+              action={
+                <Button
+                  variant="primary"
+                  icon={<Plus size={14} />}
+                  onClick={() => setCreateOpen(true)}
+                >
+                  New invoice
+                </Button>
+              }
             />
-          )}
-        />
+          </div>
+        ) : (
+          <InvoicesTable
+            data={items}
+            total={total}
+            loading={invoices.isLoading}
+            page={page}
+            pageSize={pageSize}
+            onPageChange={handlePageChange}
+            expandedRowKeys={expandedRowKeys}
+            onToggleExpand={handleToggleExpand}
+            renderExpandedRow={(invoice) => (
+              <PaymentHistoryPanel
+                invoice={invoice}
+                patientId={patientId}
+                onRecordPayment={handleOpenPayment}
+              />
+            )}
+          />
+        )}
       </Card>
 
       <RecordPaymentModal
@@ -93,6 +118,12 @@ export function PatientBilling({ patientId }: PatientBillingProps) {
         onClose={() => setPaymentInvoice(null)}
         patientId={patientId}
         invoice={paymentInvoice}
+      />
+
+      <InvoiceFormModal
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+        patientId={patientId}
       />
     </>
   );

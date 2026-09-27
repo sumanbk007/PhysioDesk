@@ -150,3 +150,41 @@ export async function deleteReport(
     `${patientEndpoints.reports(patientId)}/${reportId}`,
   );
 }
+
+
+export interface InvoiceCreatePayload {
+  patient_id: number;
+  service?: string;
+  amount?: number;
+  discount?: number;
+  line_items?: { title: string; amount: number; date?: string | null }[];
+  date?: string | null;
+  due_date?: string | null;
+  notes?: string | null;
+}
+
+export interface InvoiceLineItemPayload {
+  title: string;
+  amount: number;
+  date?: string | null;
+}
+
+export async function createInvoice(
+  payload: InvoiceCreatePayload,
+): Promise<Invoice> {
+  return api.post<Invoice>("/invoices", payload);
+}
+
+export async function addInvoiceItem(
+  invoiceId: number,
+  payload: InvoiceLineItemPayload,
+): Promise<Invoice> {
+  return api.post<Invoice>(`/invoices/${invoiceId}/items`, payload);
+}
+
+export async function removeInvoiceItem(
+  invoiceId: number,
+  index: number,
+): Promise<Invoice> {
+  return api.del<Invoice>(`/invoices/${invoiceId}/items/${index}`);
+}

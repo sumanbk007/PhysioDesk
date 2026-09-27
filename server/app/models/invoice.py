@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from decimal import Decimal
 
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy import (
     CheckConstraint,
     Date,
@@ -57,6 +58,12 @@ class Invoice(Base):
         Numeric(10, 2),
         nullable=False,
         default=Decimal("0.00"),
+    )
+
+    line_items: Mapped[list[dict]] = mapped_column(
+        JSONB,
+        nullable=False,
+        default=list,
     )
     paid_amount: Mapped[Decimal] = mapped_column(
         Numeric(10, 2),

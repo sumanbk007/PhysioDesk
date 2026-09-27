@@ -12,6 +12,9 @@ import {
   updateClinicalNote,
   updatePatient,
   uploadReport,
+  createInvoice,
+  addInvoiceItem,
+  removeInvoiceItem,
 } from "./api";
 import type {
   ClinicalNoteCreate,
@@ -125,6 +128,56 @@ export function useRecordPayment(patientId: number, invoiceId: number) {
       qc.invalidateQueries({
         queryKey: queryKeys.patients.invoices(patientId, {}),
       });
+    },
+  });
+}
+
+// ---------------- Invoices ----------------
+
+export function useCreateInvoice(patientId: number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: Parameters<typeof createInvoice>[0]) =>
+      createInvoice(payload),
+    onSuccess: () => {
+      qc.invalidateQueries({
+        queryKey: queryKeys.patients.invoices(patientId, {}),
+      });
+      qc.invalidateQueries({ queryKey: queryKeys.patients.all });
+      qc.invalidateQueries({ queryKey: queryKeys.billing.dashboard });
+    },
+  });
+}
+
+export function useAddInvoiceItem(patientId: number, invoiceId: number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: Parameters<typeof addInvoiceItem>[1]) =>
+      addInvoiceItem(invoiceId, payload),
+    onSuccess: () => {
+      qc.invalidateQueries({
+        queryKey: queryKeys.invoices.detail(invoiceId),
+      });
+      qc.invalidateQueries({
+        queryKey: queryKeys.patients.invoices(patientId, {}),
+      });
+      qc.invalidateQueries({ queryKey: queryKeys.billing.dashboard });
+    },
+  });
+}
+
+export function useRemoveInvoiceItem(patientId: number, invoiceId: number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (index: number) => removeInvoiceItem(invoiceId, index),
+    onSuccess: () => {
+      qc.invalidateQueries({
+        queryKey: queryKeys.invoices.detail(invoiceId),
+      });
+      qc.invalidateQueries({
+        queryKey: queryKeys.patients.invoices(patientId, {}),
+      });
+      qc.invalidateQueries({ queryKey: queryKeys.billing.dashboard });
     },
   });
 }

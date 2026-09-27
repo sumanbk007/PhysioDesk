@@ -151,3 +151,35 @@ def delete_payment(
 ) -> MessageResponse:
     pay_service.delete_payment(db, payment_id)
     return MessageResponse(message=f"Payment {payment_id} deleted.")
+
+
+from app.schemas.invoice import InvoiceLineItem
+
+
+@router.post(
+    "/{invoice_id}/items",
+    response_model=InvoiceRead,
+    status_code=status.HTTP_201_CREATED,
+    summary="Add a line item to an invoice",
+)
+def add_invoice_item(
+    invoice_id: int,
+    payload: InvoiceLineItem,
+    db: Session = Depends(get_db),
+) -> InvoiceRead:
+    inv = inv_service.add_line_item(db, invoice_id, payload)
+    return InvoiceRead.model_validate(inv)
+
+
+@router.delete(
+    "/{invoice_id}/items/{index}",
+    response_model=InvoiceRead,
+    summary="Remove a line item from an invoice by index",
+)
+def remove_invoice_item(
+    invoice_id: int,
+    index: int,
+    db: Session = Depends(get_db),
+) -> InvoiceRead:
+    inv = inv_service.remove_line_item(db, invoice_id, index)
+    return InvoiceRead.model_validate(inv)

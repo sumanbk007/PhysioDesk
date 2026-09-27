@@ -6,17 +6,23 @@
   border-radius: $radius-control;
   display: flex;
   flex-direction: column;
+  gap: $space-5;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
   gap: $space-3;
 }
 
-.header {
+.sectionHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: $space-3;
 }
 
-.title {
+.sectionTitle {
   font-size: 12px;
   font-weight: 600;
   color: $brand-text-secondary;
@@ -24,7 +30,8 @@
   letter-spacing: 0.04em;
 }
 
-.list {
+.itemList,
+.paymentList {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -34,6 +41,100 @@
 }
 
 .item {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) 100px 120px 32px;
+  gap: $space-3;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid $brand-border;
+}
+
+.itemTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: $brand-text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemDate {
+  font-size: 12px;
+  color: $brand-text-secondary;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemAmount {
+  font-size: 13px;
+  font-weight: 500;
+  color: $brand-text;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemRemove {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: $brand-text-muted;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all $duration-fast;
+
+  &:hover {
+    background: rgba(244, 63, 94, 0.1);
+    color: $status-danger;
+  }
+}
+
+.noItems {
+  font-size: 12px;
+  color: $brand-text-muted;
+  padding: $space-2 0;
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: $space-3 $space-4;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid $brand-border;
+}
+
+.totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: $brand-text-secondary;
+
+  span:last-child {
+    font-variant-numeric: tabular-nums;
+    color: $brand-text;
+  }
+}
+
+.balanceRow {
+  padding-top: 6px;
+  margin-top: 2px;
+  border-top: 1px solid $brand-border;
+  font-weight: 500;
+
+  span:last-child {
+    color: $brand-primary-active;
+    font-weight: 600;
+  }
+}
+
+.payment {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,7 +145,7 @@
   border: 1px solid $brand-border;
 }
 
-.itemLeft {
+.paymentLeft {
   display: flex;
   align-items: baseline;
   gap: $space-3;
@@ -52,25 +153,25 @@
   flex-wrap: wrap;
 }
 
-.method {
+.paymentMethod {
   font-size: 13px;
   font-weight: 600;
   color: $brand-text;
 }
 
-.date {
+.paymentDate {
   font-size: 12px;
   color: $brand-text-secondary;
   font-variant-numeric: tabular-nums;
 }
 
-.note {
+.paymentNote {
   font-size: 12px;
   color: $brand-text-secondary;
   font-style: italic;
 }
 
-.amount {
+.paymentAmount {
   font-size: 14px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
