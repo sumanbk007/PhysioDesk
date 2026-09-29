@@ -6,7 +6,10 @@ import { Card, PageHeader } from "@/components/ui";
 import { BillingStats } from "@/features/billing/components/billing-stats";
 import { InvoiceFilters } from "@/features/billing/components/invoice-filters";
 import { InvoicesTable } from "@/features/billing/components/invoices-table";
-import { useAllInvoices, useBillingDashboard } from "@/features/billing/queries";
+import {
+  useAllInvoices,
+  useBillingDashboard,
+} from "@/features/billing/queries";
 import { usePatients } from "@/features/patients/queries";
 import type { InvoiceListParams } from "@/features/billing/types";
 import styles from "./billing.module.scss";
@@ -37,7 +40,7 @@ export default function BillingPage() {
 
   const dashboard = useBillingDashboard();
   const invoices = useAllInvoices(filters);
-  const patients = usePatients({ page: 1, page_size: 200 });
+  const patients = usePatients({ page: 1, page_size: 100 });
 
   const patientOptions = useMemo(
     () =>

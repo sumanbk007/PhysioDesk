@@ -36,15 +36,16 @@ export function ScheduleHeader({
       <PageHeader
         title="Schedule"
         subtitle={summary ?? "Day view"}
-        action={
-          <Button
-            variant="primary"
-            icon={<CalendarPlus size={14} />}
-            onClick={onBookClick}
-          >
-            Book appointment
-          </Button>
-        }
+        //TODO:Will continue to work on this action button later
+        // action={
+        //   <Button
+        //     variant="primary"
+        //     icon={<CalendarPlus size={14} />}
+        //     onClick={onBookClick}
+        //   >
+        //     Book appointment
+        //   </Button>
+        // }
       />
 
       <div className={styles.toolbar}>
@@ -63,10 +64,7 @@ export function ScheduleHeader({
             aria-label="Next day"
           />
           {date !== todayIso && (
-            <Button
-              variant="default"
-              onClick={() => onDateChange(todayIso)}
-            >
+            <Button variant="default" onClick={() => onDateChange(todayIso)}>
               Today
             </Button>
           )}

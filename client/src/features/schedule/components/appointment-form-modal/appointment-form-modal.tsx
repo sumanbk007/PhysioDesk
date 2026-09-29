@@ -47,8 +47,6 @@ export function AppointmentFormModal(props: AppointmentFormModalProps) {
   return <RescheduleForm {...props} />;
 }
 
-// ---------------- Book ----------------
-
 function BookForm({
   open,
   onClose,
@@ -148,7 +146,11 @@ function BookForm({
         </div>
       }
     >
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+      >
         {slot && (
           <div className={styles.summary}>
             <div className={styles.summaryRow}>
@@ -180,7 +182,11 @@ function BookForm({
               value={field.value || undefined}
               onChange={(v) => field.onChange(typeof v === "number" ? v : 0)}
               onSearch={async (search) => {
-                const res = await fetchPatients({ search, page: 1, page_size: 20 });
+                const res = await fetchPatients({
+                  search,
+                  page: 1,
+                  page_size: 20,
+                });
                 return res.items.map((p) => ({
                   value: p.id,
                   label: p.name,
@@ -230,8 +236,6 @@ function BookForm({
   );
 }
 
-// ---------------- Reschedule ----------------
-
 function RescheduleForm({
   open,
   onClose,
@@ -278,8 +282,7 @@ function RescheduleForm({
       message.success("Appointment rescheduled.");
       onClose();
     } catch (err) {
-      const msg =
-        err instanceof Error ? err.message : "Could not reschedule.";
+      const msg = err instanceof Error ? err.message : "Could not reschedule.";
       message.error(msg);
     }
   };
@@ -309,7 +312,11 @@ function RescheduleForm({
         </div>
       }
     >
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+      >
         <Controller
           name="datetime"
           control={control}
@@ -328,8 +335,6 @@ function RescheduleForm({
     </Modal>
   );
 }
-
-// ---------------- Shared ----------------
 
 import type { Control, FieldValues, Path } from "react-hook-form";
 
