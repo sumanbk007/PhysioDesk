@@ -16,7 +16,7 @@ export function formatCurrency(amount: number | string, currency = "Rs") {
 
 export function formatDate(
   date: string | Date,
-  variant: "short" | "long" | "time" | "datetime" = "short"
+  variant: "short" | "long" | "time" | "datetime" = "short",
 ) {
   const d = typeof date === "string" ? new Date(date) : date;
   if (isNaN(d.getTime())) return "";
@@ -39,9 +39,10 @@ export function formatDate(
 
 export function getInitials(name: string) {
   return name
-    .split(" ")
+    .split(/\s+/)
     .filter(Boolean)
     .slice(0, 2)
-    .map((n) => n[0]?.toUpperCase())
+    .map((n) => n.replace(/[^a-zA-Z0-9]/g, "")[0]?.toUpperCase())
+    .filter(Boolean)
     .join("");
 }
