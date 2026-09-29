@@ -1,7 +1,14 @@
 "use client";
 
 import { Avatar, Dropdown } from "antd";
-import { Bell, ChevronDown, HelpCircle, LogOut, Search, User } from "lucide-react";
+import {
+  Bell,
+  ChevronDown,
+  HelpCircle,
+  LogOut,
+  Search,
+  User,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/features/auth/store";
 import { getInitials } from "@/lib/utils";
@@ -33,7 +40,12 @@ export function AppTopbar() {
       </div>
 
       <div className={styles.actions}>
-        <button type="button" className={styles.iconButton} aria-label="Notifications">
+        <button
+          type="button"
+          className={styles.iconButton}
+          aria-label="Notifications"
+          onClick={() => router.push("/notifications")}
+        >
           <Bell size={18} />
           <span className={styles.dot} />
         </button>
@@ -55,7 +67,9 @@ export function AppTopbar() {
                 label: (
                   <div className={styles.menuHeader}>
                     <div className={styles.menuName}>{displayName}</div>
-                    <div className={styles.menuRole}>{user?.role ?? "front_desk"}</div>
+                    <div className={styles.menuRole}>
+                      {user?.role ?? "front_desk"}
+                    </div>
                   </div>
                 ),
               },
@@ -73,7 +87,11 @@ export function AppTopbar() {
           <button type="button" className={styles.userButton}>
             <Avatar
               size={32}
-              style={{ backgroundColor: "#14B8A6", fontSize: 12, fontWeight: 600 }}
+              style={{
+                backgroundColor: "#14B8A6",
+                fontSize: 12,
+                fontWeight: 600,
+              }}
               icon={!user && <User size={14} />}
             >
               {user ? initials : null}
